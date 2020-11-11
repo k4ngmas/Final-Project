@@ -19,6 +19,21 @@
     <Filter Include="Source Files\Menu">
       <UniqueIdentifier>{388e0005-de7d-4afb-b5d3-0002b6ce3a0d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Data Peminjaman">
+      <UniqueIdentifier>{457b6cca-cf9b-47d0-abf3-73bd0aa02c64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Data Pengembalikan">
+      <UniqueIdentifier>{954f7941-41cf-44db-ad5b-3b6c0614a64d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Daftar Buku">
+      <UniqueIdentifier>{7e95281b-0939-4260-867b-f4ab35f76e16}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\DaftarAnggota">
+      <UniqueIdentifier>{d3a6761c-e93b-40b0-9f43-c71da03d77fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Member Team">
+      <UniqueIdentifier>{aa2f1aa4-f7ac-42eb-9e64-91701a969ba8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -29,6 +44,21 @@
     </ClCompile>
     <ClCompile Include="Menu.cpp">
       <Filter>Source Files\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="DataPengembalikan.cpp">
+      <Filter>Source Files\Data Pengembalikan</Filter>
+    </ClCompile>
+    <ClCompile Include="DataPeminjaman.cpp">
+      <Filter>Source Files\Data Peminjaman</Filter>
+    </ClCompile>
+    <ClCompile Include="DaftarBuku.cpp">
+      <Filter>Source Files\Daftar Buku</Filter>
+    </ClCompile>
+    <ClCompile Include="DaftarAnggota.cpp">
+      <Filter>Source Files\DaftarAnggota</Filter>
+    </ClCompile>
+    <ClCompile Include="MemberTeam.cpp">
+      <Filter>Source Files\Member Team</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
