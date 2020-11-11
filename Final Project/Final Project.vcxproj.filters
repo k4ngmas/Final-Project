@@ -22,9 +22,6 @@
     <Filter Include="Source Files\Data Peminjaman">
       <UniqueIdentifier>{457b6cca-cf9b-47d0-abf3-73bd0aa02c64}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Data Pengembalikan">
-      <UniqueIdentifier>{954f7941-41cf-44db-ad5b-3b6c0614a64d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Daftar Buku">
       <UniqueIdentifier>{7e95281b-0939-4260-867b-f4ab35f76e16}</UniqueIdentifier>
     </Filter>
@@ -33,6 +30,9 @@
     </Filter>
     <Filter Include="Source Files\Member Team">
       <UniqueIdentifier>{aa2f1aa4-f7ac-42eb-9e64-91701a969ba8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Data Pengembalian">
+      <UniqueIdentifier>{954f7941-41cf-44db-ad5b-3b6c0614a64d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -46,7 +46,7 @@
       <Filter>Source Files\Menu</Filter>
     </ClCompile>
     <ClCompile Include="DataPengembalikan.cpp">
-      <Filter>Source Files\Data Pengembalikan</Filter>
+      <Filter>Source Files\Data Pengembalian</Filter>
     </ClCompile>
     <ClCompile Include="DataPeminjaman.cpp">
       <Filter>Source Files\Data Peminjaman</Filter>
