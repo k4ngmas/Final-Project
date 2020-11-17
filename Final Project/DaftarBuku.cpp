@@ -1,30 +1,133 @@
 #include <iostream>
 #include <string>
 
-
-
-
+#include "Menu.h"
+#include "DaftarBuku.h"
+#include "Globals.h"
 
 using namespace std;
 
-int databuku()
+void daftarBuku()
 {	
-	cout << " _____________________________________________________ " << endl;
-	cout << "|                                                     |" << endl;
-	cout << "|           Menu Buku Perpustakaan Amikom             |" << endl;
-	cout << "|           1. Buku Indonesia                         |" << endl;
-	cout << "|           2. Buku Inggris                           |" << endl;
-	cout << "|           3. Buku Pendidikan Pancasila              |" << endl;
-	cout << "|           4. Buku Matematika						   |" << endl;
-	cout << "|           5. Buku Statistika                        |" << endl;
-	cout << "|           6. Buku Kewirausahaan                     |" << endl;
-	cout << "|           7. Buku Ekonomi                           |" << endl;
-	cout << "|           8. Buku Manajemen Usaha                   |" << endl;
-	cout << "|_____________________________________________________|" << endl;
-
+	system("cls");
+	cout << "------------- DAFTAR BUKU -------------" << endl;
 	cout << endl;
 
-	system("pause");
-	return false;
+	int count = 1;
+	for (auto buku : bukuVector)
+	{
+		cout << count++ << ". " << buku.kode << " - " << buku.judul 
+			 << " (" << buku.penulis << ", " << buku.tahunTerbit << ")" << endl;
+	}
+
+	cout << endl;
+	cout << "--- Menu ---" << endl;
+	cout << "1. Tambah buku" << endl;
+	cout << "2. Update buku" << endl;
+	cout << "3. Hapus buku" << endl;
+	cout << "9. Kembali ke menu utama" << endl << endl;
+
+	cout << "Pilih menu: ";
+	int menuSelection;
+	cin >> menuSelection;
+
+	switch (menuSelection)
+	{
+	case 1:
+		tambah();
+		break;
+	case 2:
+		update();
+		break;
+	case 3:
+		hapus();
+		break;
+	case 9:
+		mainMenu();
+		break;
+	default:
+		cout << "Input tidak valid!";
+		break;
+	}
 }
 
+void tambah() {
+	system("cls");
+	cout << "------------- TAMBAH BUKU -------------" << endl;
+	cin.ignore();
+
+	cout << "Kode (tidak boleh sama!) : ";
+	string kode;
+	getline(cin, kode);
+
+	cout << "Judul                    : ";
+	string judul;
+	getline(cin, judul);
+
+	cout << "Penulis                  : ";
+	string penulis;
+	getline(cin, penulis);
+
+	cout << "Tahun terbit             : ";
+	int tahunTerbit;
+	cin >> tahunTerbit;
+
+	bukuVector.push_back({kode, judul, penulis, tahunTerbit});
+	daftarBuku();
+}
+
+void update() {
+	system("cls");
+	cout << "------------- UPDATE BUKU -------------" << endl;
+	cin.ignore();
+
+	cout << "Kode (harus ada di tabel data!) : ";
+	string kode;
+	getline(cin, kode);
+
+	cout << "Judul                           : ";
+	string judul;
+	getline(cin, judul);
+
+	cout << "Penulis                         : ";
+	string penulis;
+	getline(cin, penulis);
+
+	cout << "Tahun terbit                    : ";
+	int tahunTerbit;
+	cin >> tahunTerbit;
+
+	for (auto iter = bukuVector.begin(); iter != bukuVector.end(); ++iter)
+	{
+		if (iter->kode == kode)
+		{
+			iter->judul = judul;
+			iter->penulis = penulis;
+			iter->tahunTerbit = tahunTerbit;
+			break;
+		}
+	}
+
+	daftarBuku();
+}
+
+void hapus() {
+	system("cls");
+	cout << "------------- HAPUS BUKU -------------" << endl;
+	cin.ignore();
+
+	cout << "Kode (harus ada di tabel data!): ";
+	string kode;
+	getline(cin, kode);
+
+	for (auto iter = bukuVector.begin(); iter != bukuVector.end(); ++iter)
+	{
+		if (iter->kode == kode)
+		{
+			iter = bukuVector.erase(iter);
+			break;
+		}
+	}
+
+	daftarBuku();
+}

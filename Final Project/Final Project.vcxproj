@@ -140,16 +140,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="DaftarAnggota.cpp" />
-    <ClCompile Include="DataPeminjaman.cpp" />
     <ClCompile Include="DaftarBuku.cpp" />
-    <ClCompile Include="DataPengembalikan.cpp" />
     <ClCompile Include="Login.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MemberTeam.cpp" />
     <ClCompile Include="Menu.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DaftarBuku.h" />
+    <ClInclude Include="Globals.h" />
     <ClInclude Include="Login.h" />
+    <ClInclude Include="MemberTeam.h" />
     <ClInclude Include="Menu.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -1,6 +1,6 @@
 #include <iostream>
-
 #include <Windows.h>
+
 #include "Login.h"
 #include "Menu.h"
 
@@ -12,12 +12,10 @@ int main() {
 	Sleep(300);
 	if (authenticationStatus)
 	{
-		system("cls");
 		mainMenu();
 	}
 	else
 	{
-		system("cls");
 		loginMenu();
 	}
 

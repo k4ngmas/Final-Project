@@ -9,6 +9,7 @@ bool loginMenu();
 bool authentication(string username, string password);
 
 bool loginMenu() {
+	system("cls");
 	cout << "Autentikasi awal" << endl;
 
 	cout << "Username : ";
