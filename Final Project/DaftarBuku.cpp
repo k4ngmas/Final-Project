@@ -17,7 +17,7 @@ void daftarBuku()
 	for (auto buku : bukuVector)
 	{
 		cout << count++ << ". " << buku.kode << " - " << buku.judul 
-			 << " (" << buku.penulis << ", " << buku.tahunTerbit << ")" << endl;
+			 << " (" << buku.penulis << ", " << buku.tahunTerbit << "), stok : " << buku.stok << endl;
 	}
 
 	cout << endl;
@@ -72,7 +72,11 @@ void tambah() {
 	int tahunTerbit;
 	cin >> tahunTerbit;
 
-	bukuVector.push_back({kode, judul, penulis, tahunTerbit});
+	cout << "Stok                     : ";
+	int stok;
+	cin >> stok;
+
+	bukuVector.push_back({kode, judul, penulis, tahunTerbit, stok});
 	daftarBuku();
 }
 
@@ -97,6 +101,10 @@ void update() {
 	int tahunTerbit;
 	cin >> tahunTerbit;
 
+	cout << "Stok                            : ";
+	int stok;
+	cin >> stok;
+
 	for (auto iter = bukuVector.begin(); iter != bukuVector.end(); ++iter)
 	{
 		if (iter->kode == kode)
@@ -104,6 +112,7 @@ void update() {
 			iter->judul = judul;
 			iter->penulis = penulis;
 			iter->tahunTerbit = tahunTerbit;
+			iter->stok = stok;
 			break;
 		}
 	}
