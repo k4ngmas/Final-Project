@@ -8,19 +8,10 @@
 
 using namespace std;
 
-vector<Buku> bukuVector;
-
-void initialBukuData() {
-	if (bukuVector.empty())
-	{
-		bukuVector.push_back({ "P01", "Clean Code", "Robert Cecil Martin", 2008, 15 });
-		bukuVector.push_back({ "P02", "The Art Of Computer Programming", "Donald E. Knuth", 1968, 7 });
-	}
-}
+extern vector<Buku> bukuVector;
 
 void daftarBuku()
 {	
-	initialBukuData();
 	system("cls");
 	cout << "------------- DAFTAR BUKU -------------" << endl;
 	cout << endl;

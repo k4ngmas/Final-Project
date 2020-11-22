@@ -3,6 +3,7 @@
 
 #include "Login.h"
 #include "Menu.h"
+#include "GlobalsDefinitions.h"
 
 using namespace std;
 
@@ -12,6 +13,7 @@ int main() {
 	Sleep(300);
 	if (authenticationStatus)
 	{
+		defineAll();
 		mainMenu();
 	}
 	else

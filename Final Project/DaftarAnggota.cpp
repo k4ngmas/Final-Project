@@ -7,20 +7,14 @@
 
 using namespace std;
 
-vector<Anggota> anggotaVector;
-
-void initialAnggotaData() {
-	if (anggotaVector.empty())
-	{
-		anggotaVector.push_back({ "ANG001", "Rafael Shah Johan", 18, "Jakarta Pusat" });
-	}
-}
-
+extern vector<Anggota> anggotaVector;
 
 void daftarAnggota() {
-	initialAnggotaData();
-
+	system("cls");
+	cout << "------------- DAFTAR ANGGOTA -------------" << endl;
+	cout << endl;
 	// lanjutkan disini disamakan dengan daftarBuku.cpp
+	// bukuVector diganti anggotaVector, inputan disesuaikan dengan struct Anggota yang ada di Globals.h
 }
 
 void tambahAnggota() {

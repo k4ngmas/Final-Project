@@ -6,7 +6,7 @@
 #include <vector>
 
 // Global variables for Buku
-extern struct Buku
+struct Buku
 {
 	std::string kode;
 	std::string judul;
@@ -18,7 +18,7 @@ extern struct Buku
 extern std::vector<Buku> bukuVector;
 
 // Global variables for Anggota
-extern struct Anggota
+struct Anggota
 {
 	std::string kode;
 	std::string nama;

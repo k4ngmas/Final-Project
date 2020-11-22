@@ -31,6 +31,9 @@
     <Filter Include="Source Files\DaftarAnggota">
       <UniqueIdentifier>{d3a6761c-e93b-40b0-9f43-c71da03d77fe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\GlobalsDefinitions">
+      <UniqueIdentifier>{0dd2462a-5b3b-4888-9d61-7f04d56c4bf5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -51,6 +54,9 @@
     <ClCompile Include="MemberTeam.cpp">
       <Filter>Source Files\MemberTeam</Filter>
     </ClCompile>
+    <ClCompile Include="GlobalsDefinitions.cpp">
+      <Filter>Source Files\GlobalsDefinitions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Login.h">
@@ -70,6 +76,9 @@
     </ClInclude>
     <ClInclude Include="DaftarAnggota.h">
       <Filter>Source Files\DaftarAnggota</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalsDefinitions.h">
+      <Filter>Source Files\GlobalsDefinitions</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
