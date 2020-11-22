@@ -9,6 +9,10 @@ using namespace std;
 
 extern vector<Anggota> anggotaVector;
 
+void tambahAnggota();
+void updateAnggota();
+void hapusAnggota();
+
 void daftarAnggota() {
 	system("cls");
 	cout << "------------- DAFTAR ANGGOTA -------------" << endl;

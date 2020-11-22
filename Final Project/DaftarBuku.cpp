@@ -10,6 +10,10 @@ using namespace std;
 
 extern vector<Buku> bukuVector;
 
+void tambahBuku();
+void updateBuku();
+void hapusBuku();
+
 void daftarBuku()
 {	
 	system("cls");
