@@ -1,5 +1,5 @@
 #pragma once
 void daftarBuku();
-void tambah();
-void update();
-void hapus();
+void tambahBuku();
+void updateBuku();
+void hapusBuku();

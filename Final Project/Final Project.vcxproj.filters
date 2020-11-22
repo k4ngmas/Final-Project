@@ -68,5 +68,8 @@
     <ClInclude Include="Globals.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="DaftarAnggota.h">
+      <Filter>Source Files\DaftarAnggota</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

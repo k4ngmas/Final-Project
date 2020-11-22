@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <vector>
 
 #include "Menu.h"
 #include "DaftarBuku.h"
@@ -7,8 +8,19 @@
 
 using namespace std;
 
+vector<Buku> bukuVector;
+
+void initialBukuData() {
+	if (bukuVector.empty())
+	{
+		bukuVector.push_back({ "P01", "Clean Code", "Robert Cecil Martin", 2008, 15 });
+		bukuVector.push_back({ "P02", "The Art Of Computer Programming", "Donald E. Knuth", 1968, 7 });
+	}
+}
+
 void daftarBuku()
 {	
+	initialBukuData();
 	system("cls");
 	cout << "------------- DAFTAR BUKU -------------" << endl;
 	cout << endl;
@@ -17,7 +29,7 @@ void daftarBuku()
 	for (auto buku : bukuVector)
 	{
 		cout << count++ << ". " << buku.kode << " - " << buku.judul 
-			 << " (" << buku.penulis << ", " << buku.tahunTerbit << "), stok : " << buku.stok << endl;
+			 << " (" << buku.penulis << ", " << buku.tahunTerbit << "), stok: " << buku.stok << endl;
 	}
 
 	cout << endl;
@@ -34,13 +46,13 @@ void daftarBuku()
 	switch (menuSelection)
 	{
 	case 1:
-		tambah();
+		tambahBuku();
 		break;
 	case 2:
-		update();
+		updateBuku();
 		break;
 	case 3:
-		hapus();
+		hapusBuku();
 		break;
 	case 9:
 		mainMenu();
@@ -51,7 +63,7 @@ void daftarBuku()
 	}
 }
 
-void tambah() {
+void tambahBuku() {
 	system("cls");
 	cout << "------------- TAMBAH BUKU -------------" << endl;
 	cin.ignore();
@@ -80,7 +92,7 @@ void tambah() {
 	daftarBuku();
 }
 
-void update() {
+void updateBuku() {
 	system("cls");
 	cout << "------------- UPDATE BUKU -------------" << endl;
 	cin.ignore();
@@ -120,7 +132,7 @@ void update() {
 	daftarBuku();
 }
 
-void hapus() {
+void hapusBuku() {
 	system("cls");
 	cout << "------------- HAPUS BUKU -------------" << endl;
 	cin.ignore();

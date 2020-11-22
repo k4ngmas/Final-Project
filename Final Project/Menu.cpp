@@ -3,16 +3,13 @@
 
 #include "MemberTeam.h"
 #include "DaftarBuku.h"
+#include "DaftarAnggota.h"
 
 using namespace std;
 
 void mainMenu() 
 {
     system("cls");
-
-    int menu;
-    int inputbuku;
-        
     cout << "====== Perpustakaan Amikom ======" << endl;
     cout << "Amikom Sejahtera" << endl;
     cout << "Jln. Ngringin, Condongcatur" << endl;
@@ -23,20 +20,26 @@ void mainMenu()
     cout << "4. Daftar Anggota" << endl;
     cout << "5. Generate Report" << endl;
     cout << "6. Member Team" << endl;
+
     cout << "===============================" << endl;
     cout << "Pilih Menu : ";
-
+    int menu;
     cin >> menu;
 
-    if (menu == 3)
+    switch (menu)
     {
+    case 3:
         daftarBuku();
+        break;
+    case 4:
+        daftarAnggota();
+        break;
+    case 6:
+        biodataTim();
+    default:
+        break;
     }
 
-    else if (menu == 6)
-    {
-        biodataTim();
-    }
 }
 
 

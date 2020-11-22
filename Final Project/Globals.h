@@ -5,21 +5,26 @@
 #include <string>
 #include <vector>
 
-using namespace std;
-
 // Global variables for Buku
-struct Buku
+extern struct Buku
 {
-	string kode;
-	string judul;
-	string penulis;
+	std::string kode;
+	std::string judul;
+	std::string penulis;
 	int tahunTerbit;
 	int stok;
 };
 
-extern vector <Buku> bukuVector{
-	{"P01", "Clean Code", "Robert Cecil Martin", 2008, 15},
-	{"P02", "The Art Of Computer Programming", "Donald E. Knuth", 1968, 7}
+extern std::vector<Buku> bukuVector;
+
+// Global variables for Anggota
+extern struct Anggota
+{
+	std::string kode;
+	std::string nama;
+	int umur;
+	std::string alamat;
 };
 
+extern std::vector<Anggota> anggotaVector;
 #endif

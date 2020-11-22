@@ -147,6 +147,7 @@
     <ClCompile Include="Menu.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DaftarAnggota.h" />
     <ClInclude Include="DaftarBuku.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="Login.h" />
