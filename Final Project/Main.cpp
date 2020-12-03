@@ -11,15 +11,13 @@ int main() {
 	bool authenticationStatus = loginMenu();
 
 	Sleep(300);
-	if (authenticationStatus)
+	while (!authenticationStatus)
 	{
-		defineAll();
-		mainMenu();
+		authenticationStatus = loginMenu();
 	}
-	else
-	{
-		loginMenu();
-	}
+
+	defineAll();
+	mainMenu();
 
 	system("pause");
 	return 0;
