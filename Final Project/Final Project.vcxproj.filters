@@ -19,9 +19,6 @@
     <Filter Include="Source Files\Menu">
       <UniqueIdentifier>{388e0005-de7d-4afb-b5d3-0002b6ce3a0d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\PeminjamanPengembalian">
-      <UniqueIdentifier>{b7802327-999d-4e82-a400-ddfae1b2d868}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\MemberTeam">
       <UniqueIdentifier>{aa2f1aa4-f7ac-42eb-9e64-91701a969ba8}</UniqueIdentifier>
     </Filter>
@@ -33,6 +30,9 @@
     </Filter>
     <Filter Include="Source Files\GlobalsDefinitions">
       <UniqueIdentifier>{0dd2462a-5b3b-4888-9d61-7f04d56c4bf5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\PeminjamanPengembalian">
+      <UniqueIdentifier>{70dfdd69-4a50-4be8-8391-bf6f96fbd500}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -57,6 +57,9 @@
     <ClCompile Include="GlobalsDefinitions.cpp">
       <Filter>Source Files\GlobalsDefinitions</Filter>
     </ClCompile>
+    <ClCompile Include="PeminjamanPengembalian.cpp">
+      <Filter>Source Files\PeminjamanPengembalian</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Login.h">
@@ -79,6 +82,9 @@
     </ClInclude>
     <ClInclude Include="GlobalsDefinitions.h">
       <Filter>Source Files\GlobalsDefinitions</Filter>
+    </ClInclude>
+    <ClInclude Include="PeminjamanPengembalian.h">
+      <Filter>Source Files\PeminjamanPengembalian</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 
+#include "PeminjamanPengembalian.h"
 #include "MemberTeam.h"
 #include "DaftarBuku.h"
 #include "DaftarAnggota.h"
@@ -14,12 +15,11 @@ void mainMenu()
     cout << "Amikom Sejahtera" << endl;
     cout << "Jln. Ngringin, Condongcatur" << endl;
     cout << "Menu Perpustakaan" << endl;
-    cout << "1. Peminjaman Buku" << endl;
-    cout << "2. Pengembalian Buku" << endl;
-    cout << "3. Daftar Buku" << endl;
-    cout << "4. Daftar Anggota" << endl;
-    cout << "5. Generate Report" << endl;
-    cout << "6. Member Team" << endl;
+    cout << "1. Peminjaman & Pengembalian Buku" << endl;
+    cout << "2. Daftar Buku" << endl;
+    cout << "3. Daftar Anggota" << endl;
+    cout << "4. Generate Report" << endl;
+    cout << "5. Member Team" << endl;
 
     cout << "===============================" << endl;
     cout << "Pilih Menu : ";
@@ -28,14 +28,18 @@ void mainMenu()
 
     switch (menu)
     {
-    case 3:
+    case 1:
+        daftarPeminjaman();
+        break;
+    case 2:
         daftarBuku();
         break;
-    case 4:
+    case 3:
         daftarAnggota();
         break;
-    case 6:
+    case 5:
         biodataTim();
+        break;
     default:
         break;
     }

@@ -146,6 +146,7 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MemberTeam.cpp" />
     <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="PeminjamanPengembalian.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DaftarAnggota.h" />
@@ -155,6 +156,7 @@
     <ClInclude Include="Login.h" />
     <ClInclude Include="MemberTeam.h" />
     <ClInclude Include="Menu.h" />
+    <ClInclude Include="PeminjamanPengembalian.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

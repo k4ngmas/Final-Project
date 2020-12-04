@@ -27,4 +27,24 @@ struct Anggota
 };
 
 extern std::vector<Anggota> anggotaVector;
+
+// Global variables for Peminjaman Pengembalian
+struct BukuPinjaman
+{
+	std::string kode;
+	int jumlah;
+};
+
+extern struct Peminjaman
+{
+	std::string kode;
+	std::string kodeAnggota;
+	std::string tanggalPeminjaman;
+	std::string tanggalPengembalian;
+	std::string status = "Dipinjamkan";
+	int totalDenda = 0;
+	std::vector<BukuPinjaman> bukuPinjamanVector;
+};
+
+extern std::vector<Peminjaman> peminjamanVector;
 #endif

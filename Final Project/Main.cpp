@@ -10,9 +10,9 @@ using namespace std;
 int main() {
 	bool authenticationStatus = loginMenu();
 
-	Sleep(300);
 	while (!authenticationStatus)
 	{
+		Sleep(300);
 		authenticationStatus = loginMenu();
 	}
 
