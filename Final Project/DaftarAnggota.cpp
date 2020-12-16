@@ -18,7 +18,6 @@ void daftarAnggota() {
 	cout << "------------- DAFTAR ANGGOTA -------------" << endl;
 	cout << endl;
 
-
 	int count = 1;
 	for (auto anggota : anggotaVector)
 	{

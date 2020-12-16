@@ -5,6 +5,9 @@
 
 using namespace std;
 
+struct Buku buku;
+struct Anggota anggota;
+
 vector<Buku> bukuVector;
 vector<Anggota> anggotaVector;
 vector<Peminjaman> peminjamanVector;

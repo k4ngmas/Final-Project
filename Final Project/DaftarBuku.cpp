@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <Windows.h>
 
 #include "Menu.h"
 #include "DaftarBuku.h"
@@ -8,11 +9,19 @@
 
 using namespace std;
 
+extern struct Buku buku;
 extern vector<Buku> bukuVector;
 
-void tambahBuku();
+void localMenu();
+void insertBuku();
 void updateBuku();
-void hapusBuku();
+void eraseBuku();
+Buku insertBukuForm();
+Buku updateBukuForm();
+string eraseBukuForm();
+bool insert(Buku buku);
+bool update(Buku buku);
+bool erase(string kodeBuku);
 
 void daftarBuku()
 {	
@@ -27,6 +36,11 @@ void daftarBuku()
 			 << " (" << buku.penulis << ", " << buku.tahunTerbit << "), stok: " << buku.stok << endl;
 	}
 
+	localMenu();
+}
+
+void localMenu()
+{
 	cout << endl;
 	cout << "--- Menu ---" << endl;
 	cout << "1. Tambah buku" << endl;
@@ -41,13 +55,13 @@ void daftarBuku()
 	switch (menuSelection)
 	{
 	case 1:
-		tambahBuku();
+		insertBuku();
 		break;
 	case 2:
 		updateBuku();
 		break;
 	case 3:
-		hapusBuku();
+		eraseBuku();
 		break;
 	case 9:
 		mainMenu();
@@ -58,76 +72,134 @@ void daftarBuku()
 	}
 }
 
-void tambahBuku() {
+void insertBuku() 
+{
+	Buku buku = insertBukuForm();
+	bool isInsertionSuccessful = insert(buku);
+	
+	cout << endl;
+	if (isInsertionSuccessful)
+	{
+		cout << "Buku berhasil ditambahkan!" << endl;
+	}
+
+	Sleep(500);
+	daftarBuku();
+}
+
+Buku insertBukuForm()
+{
 	system("cls");
 	cout << "------------- TAMBAH BUKU -------------" << endl;
 	cin.ignore();
 
 	cout << "Kode (tidak boleh sama!) : ";
-	string kode;
-	getline(cin, kode);
+	getline(cin, buku.kode);
 
 	cout << "Judul                    : ";
-	string judul;
-	getline(cin, judul);
+	getline(cin, buku.judul);
 
 	cout << "Penulis                  : ";
-	string penulis;
-	getline(cin, penulis);
+	getline(cin, buku.penulis);
 
 	cout << "Tahun terbit             : ";
-	int tahunTerbit;
-	cin >> tahunTerbit;
+	cin >> buku.tahunTerbit;
 
 	cout << "Stok                     : ";
-	int stok;
-	cin >> stok;
+	cin >> buku.stok;
 
-	bukuVector.push_back({kode, judul, penulis, tahunTerbit, stok});
+	return buku;
+}
+
+bool insert(Buku buku)
+{
+	bukuVector.push_back({ buku.kode, buku.judul, buku.penulis, buku.tahunTerbit, buku.stok });
+	return true;
+}
+
+void updateBuku() 
+{
+	Buku buku = updateBukuForm();
+	bool isUpdateSuccessful = update(buku);
+
+	cout << endl;
+	if (isUpdateSuccessful)
+	{
+		cout << "Buku berhasil diupdate!" << endl;
+	}
+	else
+	{
+		cout << "Buku gagal diupdate!" << endl;
+		cout << "Buku dengan kode tersebut tidak ditemukan!" << endl;
+	}
+
+	Sleep(500);
 	daftarBuku();
 }
 
-void updateBuku() {
+Buku updateBukuForm()
+{
 	system("cls");
 	cout << "------------- UPDATE BUKU -------------" << endl;
 	cin.ignore();
 
 	cout << "Kode (harus ada di tabel data!) : ";
-	string kode;
-	getline(cin, kode);
+	getline(cin, buku.kode);
 
 	cout << "Judul                           : ";
-	string judul;
-	getline(cin, judul);
+	getline(cin, buku.judul);
 
 	cout << "Penulis                         : ";
-	string penulis;
-	getline(cin, penulis);
+	getline(cin, buku.penulis);
 
 	cout << "Tahun terbit                    : ";
-	int tahunTerbit;
-	cin >> tahunTerbit;
+	cin >> buku.tahunTerbit;
 
 	cout << "Stok                            : ";
-	int stok;
-	cin >> stok;
+	cin >> buku.stok;
 
-	for (auto iter = bukuVector.begin(); iter != bukuVector.end(); ++iter)
+	return buku;
+}
+
+bool update(Buku buku)
+{
+	string kode = buku.kode;
+	auto updatedBook = find_if(bukuVector.begin(), bukuVector.end(), [kode](const Buku& buku) { return buku.kode == kode; });
+	if (updatedBook != bukuVector.end())
 	{
-		if (iter->kode == kode)
-		{
-			iter->judul = judul;
-			iter->penulis = penulis;
-			iter->tahunTerbit = tahunTerbit;
-			iter->stok = stok;
-			break;
-		}
+		updatedBook->judul = buku.judul;
+		updatedBook->penulis = buku.penulis;
+		updatedBook->tahunTerbit = buku.tahunTerbit;
+		updatedBook->stok = buku.stok;
+
+		return true;
 	}
 
+	return false;
+}
+
+void eraseBuku() 
+{
+	string kodeBuku = eraseBukuForm();
+	bool isErasionSuccessful = erase(kodeBuku);
+
+	cout << endl;
+	if (isErasionSuccessful)
+	{
+		cout << "Buku berhasil dihapus!" << endl;
+	}
+	else
+	{
+		cout << "Buku gagal dihapus!" << endl;
+		cout << "Buku dengan kode tersebut tidak ditemukan!" << endl;
+	}
+
+	Sleep(500);
 	daftarBuku();
 }
 
-void hapusBuku() {
+string eraseBukuForm()
+{
 	system("cls");
 	cout << "------------- HAPUS BUKU -------------" << endl;
 	cin.ignore();
@@ -136,14 +208,17 @@ void hapusBuku() {
 	string kode;
 	getline(cin, kode);
 
-	for (auto iter = bukuVector.begin(); iter != bukuVector.end(); ++iter)
-	{
-		if (iter->kode == kode)
-		{
-			iter = bukuVector.erase(iter);
-			break;
-		}
-	}
+	return kode;
+}
 
-	daftarBuku();
+bool erase(string kodeBuku)
+{
+	auto erasedBook = remove_if(bukuVector.begin(), bukuVector.end(), [kodeBuku](const Buku& buku) { return buku.kode == kodeBuku; });
+	if (erasedBook != bukuVector.end())
+	{
+		bukuVector.erase(erasedBook, bukuVector.end());
+		return true;
+	}
+	
+	return false;
 }
