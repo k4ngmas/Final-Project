@@ -12,16 +12,16 @@ using namespace std;
 extern struct Buku buku;
 extern vector<Buku> bukuVector;
 
-void localMenu();
+void bukuMenu();
 void insertBuku();
 void updateBuku();
-void eraseBuku();
+void deleteBuku();
 Buku insertBukuForm();
 Buku updateBukuForm();
-string eraseBukuForm();
-bool insert(Buku buku);
-bool update(Buku buku);
-bool erase(string kodeBuku);
+string deleteBukuForm();
+bool insertToBukuVector(Buku buku);
+bool updateBukuVector(Buku buku);
+bool deleteFromBukuVector(string kodeBuku);
 
 void daftarBuku()
 {	
@@ -36,10 +36,10 @@ void daftarBuku()
 			 << " (" << buku.penulis << ", " << buku.tahunTerbit << "), stok: " << buku.stok << endl;
 	}
 
-	localMenu();
+	bukuMenu();
 }
 
-void localMenu()
+void bukuMenu()
 {
 	cout << endl;
 	cout << "--- Menu ---" << endl;
@@ -61,7 +61,7 @@ void localMenu()
 		updateBuku();
 		break;
 	case 3:
-		eraseBuku();
+		deleteBuku();
 		break;
 	case 9:
 		mainMenu();
@@ -75,7 +75,7 @@ void localMenu()
 void insertBuku() 
 {
 	Buku buku = insertBukuForm();
-	bool isInsertionSuccessful = insert(buku);
+	bool isInsertionSuccessful = insertToBukuVector(buku);
 	
 	cout << endl;
 	if (isInsertionSuccessful)
@@ -111,7 +111,7 @@ Buku insertBukuForm()
 	return buku;
 }
 
-bool insert(Buku buku)
+bool insertToBukuVector(Buku buku)
 {
 	bukuVector.push_back({ buku.kode, buku.judul, buku.penulis, buku.tahunTerbit, buku.stok });
 	return true;
@@ -120,7 +120,7 @@ bool insert(Buku buku)
 void updateBuku() 
 {
 	Buku buku = updateBukuForm();
-	bool isUpdateSuccessful = update(buku);
+	bool isUpdateSuccessful = updateBukuVector(buku);
 
 	cout << endl;
 	if (isUpdateSuccessful)
@@ -161,16 +161,19 @@ Buku updateBukuForm()
 	return buku;
 }
 
-bool update(Buku buku)
+bool updateBukuVector(Buku buku)
 {
 	string kode = buku.kode;
-	auto updatedBook = find_if(bukuVector.begin(), bukuVector.end(), [kode](const Buku& buku) { return buku.kode == kode; });
-	if (updatedBook != bukuVector.end())
+	auto updatedBuku = find_if(bukuVector.begin(), bukuVector.end(), [kode](const Buku& buku) { 
+		return buku.kode == kode; 
+	});
+
+	if (updatedBuku != bukuVector.end())
 	{
-		updatedBook->judul = buku.judul;
-		updatedBook->penulis = buku.penulis;
-		updatedBook->tahunTerbit = buku.tahunTerbit;
-		updatedBook->stok = buku.stok;
+		updatedBuku->judul = buku.judul;
+		updatedBuku->penulis = buku.penulis;
+		updatedBuku->tahunTerbit = buku.tahunTerbit;
+		updatedBuku->stok = buku.stok;
 
 		return true;
 	}
@@ -178,13 +181,13 @@ bool update(Buku buku)
 	return false;
 }
 
-void eraseBuku() 
+void deleteBuku() 
 {
-	string kodeBuku = eraseBukuForm();
-	bool isErasionSuccessful = erase(kodeBuku);
+	string kodeBuku = deleteBukuForm();
+	bool isDeletionSuccessful = deleteFromBukuVector(kodeBuku);
 
 	cout << endl;
-	if (isErasionSuccessful)
+	if (isDeletionSuccessful)
 	{
 		cout << "Buku berhasil dihapus!" << endl;
 	}
@@ -198,7 +201,7 @@ void eraseBuku()
 	daftarBuku();
 }
 
-string eraseBukuForm()
+string deleteBukuForm()
 {
 	system("cls");
 	cout << "------------- HAPUS BUKU -------------" << endl;
@@ -211,12 +214,15 @@ string eraseBukuForm()
 	return kode;
 }
 
-bool erase(string kodeBuku)
+bool deleteFromBukuVector(string kodeBuku)
 {
-	auto erasedBook = remove_if(bukuVector.begin(), bukuVector.end(), [kodeBuku](const Buku& buku) { return buku.kode == kodeBuku; });
-	if (erasedBook != bukuVector.end())
+	auto deletedBuku = remove_if(bukuVector.begin(), bukuVector.end(), [kodeBuku](const Buku& buku) { 
+		return buku.kode == kodeBuku; 
+	});
+
+	if (deletedBuku != bukuVector.end())
 	{
-		bukuVector.erase(erasedBook, bukuVector.end());
+		bukuVector.erase(deletedBuku, bukuVector.end());
 		return true;
 	}
 	

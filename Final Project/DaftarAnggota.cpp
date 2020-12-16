@@ -11,16 +11,16 @@ using namespace std;
 extern struct Anggota anggota;
 extern vector<Anggota> anggotaVector;
 
-void localMenu();
+void anggotaMenu();
 void insertAnggota();
 void updateAnggota();
-void eraseAnggota();
+void deleteAnggota();
 Anggota insertAnggotaForm();
 Anggota updateAnggotaForm();
-string eraseAnggotaForm();
-bool insert(Anggota anggota);
-bool update(Anggota anggota);
-bool erase(string kodeAnggota);
+string deleteAnggotaForm();
+bool insertToAnggotaVector(Anggota anggota);
+bool updateAnggotaVector(Anggota anggota);
+bool deleteFromAnggotaVector(string kodeAnggota);
 
 void daftarAnggota() {
 	system("cls");
@@ -34,10 +34,10 @@ void daftarAnggota() {
 			<< " (" << anggota.umur << ", " << anggota.alamat << ")" << endl;
 	}
 
-	localMenu();
+	anggotaMenu();
 }
 
-void localMenu()
+void anggotaMenu()
 {
 	cout << endl;
 	cout << "--- Menu ---" << endl;
@@ -59,7 +59,7 @@ void localMenu()
 		updateAnggota();
 		break;
 	case 3:
-		eraseAnggota();
+		deleteAnggota();
 		break;
 	case 9:
 		mainMenu();
@@ -73,7 +73,7 @@ void localMenu()
 void insertAnggota() 
 {
 	Anggota anggota = insertAnggotaForm();
-	bool isInsertionSuccessful = insert(anggota);
+	bool isInsertionSuccessful = insertToAnggotaVector(anggota);
 
 	if (isInsertionSuccessful)
 	{
@@ -107,7 +107,7 @@ Anggota insertAnggotaForm()
 	return anggota;
 }
 
-bool insert(Anggota anggota)
+bool insertToAnggotaVector(Anggota anggota)
 {
 	anggotaVector.push_back({ anggota.kode, anggota.nama, anggota.umur, anggota.alamat });
 	return true;
@@ -116,7 +116,7 @@ bool insert(Anggota anggota)
 void updateAnggota() 
 {
 	Anggota anggota = updateAnggotaForm();
-	bool isUpdateSuccessful = update(anggota);
+	bool isUpdateSuccessful = updateAnggotaVector(anggota);
 
 	cout << endl;
 	if (isUpdateSuccessful)
@@ -156,7 +156,7 @@ Anggota updateAnggotaForm()
 	return anggota;
 }
 
-bool update(Anggota anggota)
+bool updateAnggotaVector(Anggota anggota)
 {
 	string kode = anggota.kode;
 	auto updatedAnggota = find_if(anggotaVector.begin(), anggotaVector.end(), [kode](const Anggota& anggota) { 
@@ -175,13 +175,13 @@ bool update(Anggota anggota)
 	return false;
 }
 
-void eraseAnggota() 
+void deleteAnggota() 
 {
-	string kodeAnggota = eraseAnggotaForm();
-	bool isErasionSuccessful = erase(kodeAnggota);
+	string kodeAnggota = deleteAnggotaForm();
+	bool isDeletionSuccessful = deleteFromAnggotaVector(kodeAnggota);
 
 	cout << endl;
-	if (isErasionSuccessful)
+	if (isDeletionSuccessful)
 	{
 		cout << "Buku berhasil dihapus!" << endl;
 	}
@@ -195,7 +195,7 @@ void eraseAnggota()
 	daftarAnggota();
 }
 
-string eraseAnggotaForm()
+string deleteAnggotaForm()
 {
 	system("cls");
 	cout << "------------- HAPUS ANGGOTA -------------" << endl;
@@ -208,7 +208,7 @@ string eraseAnggotaForm()
 	return kode;
 }
 
-bool erase(string kodeAnggota)
+bool deleteFromAnggotaVector(string kodeAnggota)
 {
 	auto erasedAnggota = remove_if(anggotaVector.begin(), anggotaVector.end(), [kodeAnggota](const Anggota& anggota) {
 		return anggota.kode == kodeAnggota;
