@@ -34,9 +34,9 @@ void featureMenu()
 {
 	cout << endl;
 	cout << "--- Menu ---" << endl;
-	cout << "1. Tambah peminjaman" << endl;
-	cout << "2. Kembalikan peminjaman" << endl;
-	cout << "3. Detail peminjaman" << endl;
+	cout << "1. Tambah Peminjaman" << endl;
+	cout << "2. Pengembalian Buku" << endl;
+	cout << "3. Detail Peminjaman" << endl;
 	cout << "9. Kembali ke menu utama" << endl << endl;
 
 	cout << "Pilih menu: ";
@@ -116,7 +116,47 @@ void tambahPeminjaman()
 
 void returnPeminjaman()
 {
+	system("cls");
+	cout << "------------- PENGEMBALIAN BUKU -------------" << endl << endl;
 
+	cout << "Kode Anggota		: ";
+	string kodeanggota;
+	cin >> kodeanggota;
+
+	cout << "Kode buku 1		: ";
+	string kodebuku1;
+	cin >> kodebuku1;
+
+	cout << "Kode buku 2		: ";
+	string kodebuku2;
+	cin >> kodebuku2;
+
+	cout << "Kode buku 3		: ";
+	string kodebuku3;
+	cin >> kodebuku3;
+
+	cout << "Tanggal Peminjaman	: ";
+	string tanggalpeminjaman;
+	cin >> tanggalpeminjaman;
+	
+	cout << "Tanggal Pengembalian	: ";
+	string tanggalpengembalian;
+	cin >> tanggalpengembalian;
+
+	cout << "Keadaan Buku		: ";
+	string keadaanbuku;
+	cin >> keadaanbuku; 
+	cout << endl;
+
+	cout << "Denda Keterlamabatan Pengembalian	: " << endl;
+
+	cout << "Denda Kerusakan Buku			: " << endl << endl;
+
+	cout << "Paraf Petugas" << endl;
+	cout << "Nama : ";
+	string namapetugas;
+	cin >> namapetugas;
+	cout << endl << endl;
 }
 
 void detailPeminjaman()

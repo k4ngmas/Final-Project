@@ -12,7 +12,7 @@ void biodataTim()
 	cout << "|                BIODATA TIM                |\n";
 	cout << "+----+--------------------------------------+\n";
 	cout << "| 1. | Rakandhiya Daanii R    (20.11.3304)  |\n";
-	cout << "| 2. | Hasif Priyambudi       (20.11.3306)  |\n";
+	cout << "| 2. | Hasif Priyambudi       (20.11.3305)  |\n";
 	cout << "| 3. | Azzila Isme Karen      (20.11.3312)  |\n";
 	cout << "| 4. | Sandy Wildani Bachtiar (20.11.3333)  |\n";
 	cout << "| 5. | Muhammad Abiyyu        (20.11.3346)  |\n";
