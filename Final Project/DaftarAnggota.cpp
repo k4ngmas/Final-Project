@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <Windows.h>
 
 #include "Menu.h"
 #include "DaftarAnggota.h"
@@ -7,11 +8,19 @@
 
 using namespace std;
 
+extern struct Anggota anggota;
 extern vector<Anggota> anggotaVector;
 
-void tambahAnggota();
+void localMenu();
+void insertAnggota();
 void updateAnggota();
-void hapusAnggota();
+void eraseAnggota();
+Anggota insertAnggotaForm();
+Anggota updateAnggotaForm();
+string eraseAnggotaForm();
+bool insert(Anggota anggota);
+bool update(Anggota anggota);
+bool erase(string kodeAnggota);
 
 void daftarAnggota() {
 	system("cls");
@@ -25,6 +34,11 @@ void daftarAnggota() {
 			<< " (" << anggota.umur << ", " << anggota.alamat << ")" << endl;
 	}
 
+	localMenu();
+}
+
+void localMenu()
+{
 	cout << endl;
 	cout << "--- Menu ---" << endl;
 	cout << "1. Tambah anggota" << endl;
@@ -39,13 +53,13 @@ void daftarAnggota() {
 	switch (menuSelection)
 	{
 	case 1:
-		tambahAnggota();
+		insertAnggota();
 		break;
 	case 2:
 		updateAnggota();
 		break;
 	case 3:
-		hapusAnggota();
+		eraseAnggota();
 		break;
 	case 9:
 		mainMenu();
@@ -56,71 +70,133 @@ void daftarAnggota() {
 	}
 }
 
-void tambahAnggota() {
+void insertAnggota() 
+{
+	Anggota anggota = insertAnggotaForm();
+	bool isInsertionSuccessful = insert(anggota);
+
+	if (isInsertionSuccessful)
+	{
+		cout << "Buku berhasil ditambahkan!" << endl;
+	}
+	
+	Sleep(500);
+	daftarAnggota();
+}
+
+Anggota insertAnggotaForm()
+{
 	system("cls");
 	cout << "------------- TAMBAH ANGGOTA -------------" << endl;
 	cin.ignore();
 
 	cout << "Kode (tidak boleh sama!) : ";
-	string kode;
-	getline(cin, kode);
+	getline(cin, anggota.kode);
 
 	cout << "Nama                     : ";
-	string nama;
-	getline(cin, nama);
+	getline(cin, anggota.nama);
 
 	cout << "Umur                     : ";
-	int umur;
-	cin >> umur;
+	cin >> anggota.umur;
 
 	cin.ignore();
 
 	cout << "Alamat                   : ";
-	string alamat;
-	getline(cin, alamat);
+	getline(cin, anggota.alamat);
 
-	anggotaVector.push_back({ kode, nama, umur, alamat });
+	return anggota;
+}
+
+bool insert(Anggota anggota)
+{
+	anggotaVector.push_back({ anggota.kode, anggota.nama, anggota.umur, anggota.alamat });
+	return true;
+}
+
+void updateAnggota() 
+{
+	Anggota anggota = updateAnggotaForm();
+	bool isUpdateSuccessful = update(anggota);
+
+	cout << endl;
+	if (isUpdateSuccessful)
+	{
+		cout << "Anggota berhasil diupdate!" << endl;
+	}
+	else
+	{
+		cout << "Anggota gagal diupdate!" << endl;
+		cout << "Anggota dengan kode tersebut tidak ditemukan!" << endl;
+	}
+
+	Sleep(500);
 	daftarAnggota();
 }
 
-void updateAnggota() {
+Anggota updateAnggotaForm()
+{
 	system("cls");
 	cout << "------------- UPDATE ANGGOTA -------------" << endl;
 	cin.ignore();
 
 	cout << "Kode (harus ada di tabel data!) : ";
-	string kode;
-	getline(cin, kode);
+	getline(cin, anggota.kode);
 
-	cout << "Nama                     : ";
-	string nama;
-	getline(cin, nama);
+	cout << "Nama                            : ";
+	getline(cin, anggota.nama);
 
-	cout << "Umur                     : ";
-	int umur;
-	cin >> umur;
+	cout << "Umur                            : ";
+	cin >> anggota.umur;
 
 	cin.ignore();
 
-	cout << "Alamat                   : ";
-	string alamat;
-	getline(cin, alamat);
+	cout << "Alamat                          : ";
+	getline(cin, anggota.alamat);
 
-	for (auto iter = anggotaVector.begin(); iter != anggotaVector.end(); ++iter)
+	return anggota;
+}
+
+bool update(Anggota anggota)
+{
+	string kode = anggota.kode;
+	auto updatedAnggota = find_if(anggotaVector.begin(), anggotaVector.end(), [kode](const Anggota& anggota) { 
+			return anggota.kode == kode; 
+	});
+
+	if (updatedAnggota != anggotaVector.end())
 	{
-		if (iter->kode == kode)
-		{
-			iter->nama = nama;
-			iter->umur = umur;
-			iter->alamat = alamat;
-			break;
-		}
+		updatedAnggota->nama = anggota.nama;
+		updatedAnggota->umur = anggota.umur;
+		updatedAnggota->alamat = anggota.alamat;
+
+		return true;
 	}
 
+	return false;
+}
+
+void eraseAnggota() 
+{
+	string kodeAnggota = eraseAnggotaForm();
+	bool isErasionSuccessful = erase(kodeAnggota);
+
+	cout << endl;
+	if (isErasionSuccessful)
+	{
+		cout << "Buku berhasil dihapus!" << endl;
+	}
+	else
+	{
+		cout << "Buku gagal dihapus!" << endl;
+		cout << "Buku dengan kode tersebut tidak ditemukan!" << endl;
+	}
+
+	Sleep(500);
 	daftarAnggota();
 }
 
-void hapusAnggota() {
+string eraseAnggotaForm()
+{
 	system("cls");
 	cout << "------------- HAPUS ANGGOTA -------------" << endl;
 	cin.ignore();
@@ -129,14 +205,20 @@ void hapusAnggota() {
 	string kode;
 	getline(cin, kode);
 
-	for (auto iter = anggotaVector.begin(); iter != anggotaVector.end(); ++iter)
+	return kode;
+}
+
+bool erase(string kodeAnggota)
+{
+	auto erasedAnggota = remove_if(anggotaVector.begin(), anggotaVector.end(), [kodeAnggota](const Anggota& anggota) {
+		return anggota.kode == kodeAnggota;
+	});
+
+	if (erasedAnggota != anggotaVector.end())
 	{
-		if (iter->kode == kode)
-		{
-			iter = anggotaVector.erase(iter);
-			break;
-		}
+		anggotaVector.erase(erasedAnggota, anggotaVector.end());
+		return true;
 	}
 
-	daftarAnggota();
+	return false;
 }
