@@ -1,6 +1,5 @@
 #include <iostream>
 #include <string>
-#include <vector>
 #include <Windows.h>
 
 #include "Menu.h"
@@ -16,9 +15,11 @@ void bukuMenu();
 void insertBuku();
 void updateBuku();
 void deleteBuku();
+
 Buku insertBukuForm();
 Buku updateBukuForm();
 string deleteBukuForm();
+
 bool insertToBukuVector(Buku buku);
 bool updateBukuVector(Buku buku);
 bool deleteFromBukuVector(string kodeBuku);
@@ -32,8 +33,8 @@ void daftarBuku()
 	int count = 1;
 	for (auto buku : bukuVector)
 	{
-		cout << count++ << ". " << buku.kode << " - " << buku.judul 
-			 << " (" << buku.penulis << ", " << buku.tahunTerbit << "), stok: " << buku.stok << endl;
+		cout << count++ << ". " << buku.kode << " - " << buku.judul
+			<< " (" << buku.penulis << ", " << buku.tahunTerbit << "), stok: " << buku.stok << endl;
 	}
 
 	bukuMenu();
@@ -113,7 +114,7 @@ Buku insertBukuForm()
 
 bool insertToBukuVector(Buku buku)
 {
-	bukuVector.push_back({ buku.kode, buku.judul, buku.penulis, buku.tahunTerbit, buku.stok });
+	bukuVector.push_back(buku);
 	return true;
 }
 

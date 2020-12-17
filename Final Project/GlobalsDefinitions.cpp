@@ -24,7 +24,7 @@ void defineBuku() {
 	if (bukuVector.empty())
 	{
 		bukuVector.push_back({ "PRG001", "Clean Code", "Robert Cecil Martin", 2008, 15 });
-		bukuVector.push_back({ "PRG002", "The Art Of Computer Programming", "Donald E. Knuth", 1968, 7 });
+		bukuVector.push_back({ "PRG002", "The Art Of Computer Programming", "Donald E. Knuth", 1968, 21 });
 	}
 }
 

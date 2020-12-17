@@ -32,7 +32,7 @@ extern std::vector<Anggota> anggotaVector;
 struct BukuPinjaman
 {
 	std::string kode;
-	int jumlah;
+	int jumlah = 0;
 };
 
 struct Peminjaman
@@ -42,8 +42,8 @@ struct Peminjaman
 	std::string tanggalPeminjaman;
 	std::string tanggalPengembalian;
 	std::string status = "Dipinjamkan";
-	int totalDenda = 0;
 	std::vector<BukuPinjaman> bukuPinjamanVector;
+	int dendaTelat = 0;
 };
 
 extern std::vector<Peminjaman> peminjamanVector;

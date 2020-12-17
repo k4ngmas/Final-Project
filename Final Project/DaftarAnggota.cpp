@@ -15,9 +15,11 @@ void anggotaMenu();
 void insertAnggota();
 void updateAnggota();
 void deleteAnggota();
+
 Anggota insertAnggotaForm();
 Anggota updateAnggotaForm();
 string deleteAnggotaForm();
+
 bool insertToAnggotaVector(Anggota anggota);
 bool updateAnggotaVector(Anggota anggota);
 bool deleteFromAnggotaVector(string kodeAnggota);
