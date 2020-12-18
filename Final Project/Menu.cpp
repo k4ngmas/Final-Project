@@ -8,20 +8,24 @@
 
 using namespace std;
 
+void mainMenuSwitch();
+
 void mainMenu() 
 {
     system("cls");
-    cout << "====== Perpustakaan Amikom ======" << endl;
-    cout << "Amikom Sejahtera" << endl;
-    cout << "Jln. Ngringin, Condongcatur" << endl;
-    cout << "Menu Perpustakaan" << endl;
-    cout << "1. Peminjaman & Pengembalian Buku" << endl;
-    cout << "2. Daftar Buku" << endl;
-    cout << "3. Daftar Anggota" << endl;
-    cout << "4. Generate Report" << endl;
-    cout << "5. Member Team" << endl;
+	cout << "+- MAIN MENU PERPUSTAKAAN AMIKOM ------------------+" << endl;
+	cout << "|  1. Daftar Peminjaman                            |" << endl;
+	cout << "|  2. Daftar Buku                                  |" << endl;
+	cout << "|  3. Daftar Anggota                               |" << endl;
+    cout << "|  4. Generate text file                           |" << endl;
+    cout << "|  5. Biodata Tim                                  |" << endl;
+	cout << "+--------------------------------------------------+" << endl << endl;
 
-    cout << "===============================" << endl;
+    mainMenuSwitch();
+}
+
+void mainMenuSwitch()
+{
     cout << "Pilih Menu : ";
     int menu;
     cin >> menu;
@@ -37,11 +41,13 @@ void mainMenu()
     case 3:
         daftarAnggota();
         break;
+    case 4:
+        cout << "NOT IMPLEMENTED YET!" << endl;
+        break;
     case 5:
         biodataTim();
         break;
     default:
         break;
     }
-
 }

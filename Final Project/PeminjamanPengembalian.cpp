@@ -2,6 +2,7 @@
 #include <string>
 #include <sstream> 
 #include <Windows.h>
+#include <iomanip>
 
 #include "Menu.h"
 #include "PeminjamanPengembalian.h"
@@ -10,7 +11,10 @@
 using namespace std;
 
 extern vector<Peminjaman> peminjamanVector;
-extern vector<Buku> buku;
+extern vector<Buku> bukuVector;
+extern vector<Anggota> anggotaVector;
+
+extern struct TableFormatter tableFormatter;
 struct Peminjaman peminjaman;
 struct BukuPinjaman bukuPinjaman;
 struct Pengembalian {
@@ -18,7 +22,13 @@ struct Pengembalian {
 	string tanggalPengembalian;
 } pengembalian;
 
+void formatPeminjamanTable();
+void formatPeminjamanTableHeader();
+void formatPeminjamanTableChildRow();
+string findAnggotaByKode(string kode);
+
 void peminjamanPengembalianMenu();
+void peminjamanPengembalianMenuSwitch();
 void insertPeminjaman();
 void detailPeminjaman();
 void returnPeminjaman();
@@ -28,6 +38,11 @@ Peminjaman insertBukuPinjamanForm(Peminjaman peminjaman);
 string detailPeminjamanForm();
 Pengembalian returnPeminjamanForm();
 int payDendaForm(int denda);
+void detailPeminjamanMenuSwitch();
+
+void formatDetailPeminjamanTable(vector<BukuPinjaman>& bukuPinjamanVector);
+void formatDetailPeminjamanTableHeader();
+void formatDetailPeminjamanTableChildRow(vector<BukuPinjaman>& bukuPinjamanVector);
 
 bool insertToPeminjamanVector(Peminjaman peminjaman);
 void decreaseBukuFromBukuVector(string kode);
@@ -41,29 +56,81 @@ int getDaysBetweenDates(string firstDate, string secondDate);
 void daftarPeminjaman()
 {
 	system("cls");
-	cout << "------------- DAFTAR PEMINJAMAN -------------" << endl;
+	formatPeminjamanTable();
+	peminjamanPengembalianMenu();
+}
+
+void formatPeminjamanTable()
+{
+	formatPeminjamanTableHeader();
+	formatPeminjamanTableChildRow();
+}
+
+void formatPeminjamanTableHeader()
+{
+	cout << "+";
+	cout << left << setw(113) << setfill(tableFormatter.headerRowSeparator) << "- DAFTAR PEMINJAMAN -";
+	cout << "+";
 	cout << endl;
 
+	cout << "|  ";
+	cout << left << setw(tableFormatter.counterColumnLength) << setfill(tableFormatter.columnSeparator) << "#";
+	cout << left << setw(tableFormatter.numColumnLength) << setfill(tableFormatter.columnSeparator) << "Kode";
+	cout << left << setw(tableFormatter.numColumnLength) << setfill(tableFormatter.columnSeparator) << "Anggota";
+	cout << left << setw(tableFormatter.dateColumnLength) << setfill(tableFormatter.columnSeparator) << "Tanggal pinjam";
+	cout << left << setw(tableFormatter.dateColumnLength) << setfill(tableFormatter.columnSeparator) << "Jadwal kembali";
+	cout << left << setw(tableFormatter.dateColumnLength) << setfill(tableFormatter.columnSeparator) << "Tanggal kembali";
+	cout << left << setw(tableFormatter.statusColumnLength) << setfill(tableFormatter.columnSeparator) << "Status";
+	cout << left << setw(tableFormatter.numColumnLength) << setfill(tableFormatter.columnSeparator) << "Denda";
+	cout << "  |" << endl;
+
+	cout << "+";
+	cout << left << setw(113) << setfill(tableFormatter.headerRowSeparator) << "";
+	cout << "+";
+	cout << endl;
+}
+
+void formatPeminjamanTableChildRow()
+{
 	int count = 1;
 	for (auto peminjaman : peminjamanVector)
 	{
-		cout << count++ << ". " << peminjaman.kode << " - " << peminjaman.kodeAnggota
-			 << " - " << peminjaman.tanggalPeminjaman << " s/d " << peminjaman.tanggalPengembalian 
-			 << " - " << peminjaman.status << endl;
+		cout << "|  ";
+		cout << left << setw(tableFormatter.counterColumnLength) << setfill(tableFormatter.columnSeparator) << count++;
+		cout << left << setw(tableFormatter.numColumnLength) << setfill(tableFormatter.columnSeparator) << peminjaman.kode;
+		cout << left << setw(tableFormatter.numColumnLength) << setfill(tableFormatter.columnSeparator) << peminjaman.kodeAnggota;
+		cout << left << setw(tableFormatter.dateColumnLength) << setfill(tableFormatter.columnSeparator) << peminjaman.tanggalPeminjaman;
+		cout << left << setw(tableFormatter.dateColumnLength) << setfill(tableFormatter.columnSeparator) << peminjaman.jadwalPengembalian;
+		cout << left << setw(tableFormatter.dateColumnLength) << setfill(tableFormatter.columnSeparator) << peminjaman.tanggalDikembalikan;
+		cout << left << setw(tableFormatter.statusColumnLength) << setfill(tableFormatter.columnSeparator) << peminjaman.status;
+		cout << left << setw(tableFormatter.numColumnLength) << setfill(tableFormatter.columnSeparator) << peminjaman.dendaTelat;
+		cout << "  |" << endl;
 	}
 
-	peminjamanPengembalianMenu();
+	if (!peminjamanVector.empty())
+	{
+		cout << "+";
+		cout << left << setw(113) << setfill(tableFormatter.headerRowSeparator) << "";
+		cout << "+";
+		cout << endl;
+	}
 }
 
 void peminjamanPengembalianMenu()
 {
 	cout << endl;
-	cout << "--- Menu ---" << endl;
-	cout << "1. Tambah Peminjaman" << endl;
-	cout << "2. Detail Peminjaman" << endl;
-	cout << "3. pengembalian Buku" << endl;
-	cout << "9. Kembali ke menu utama" << endl << endl;
+	cout << "+- MENU -----------------------+" << endl;
+	cout << "|  1. Tambah peminjaman        |" << endl;
+	cout << "|  2. Detail peminjaman        |" << endl;
+	cout << "|  3. Pengembalian peminjaman  |" << endl;
+	cout << "|  9. Kembali ke menu utama    |" << endl;
+	cout << "+------------------------------+" << endl << endl;
+	
+	peminjamanPengembalianMenuSwitch();
+}
 
+void peminjamanPengembalianMenuSwitch()
+{
 	cout << "Pilih menu: ";
 	int menuSelection;
 	cin >> menuSelection;
@@ -117,8 +184,8 @@ Peminjaman insertPeminjamanForm()
 	cout << "Tanggal Peminjaman [yyyy-mm-dd]   : ";
 	cin >> peminjaman.tanggalPeminjaman;
 
-	cout << "Tanggal Pengembalian [yyyy-mm-dd] : ";
-	cin >> peminjaman.tanggalPengembalian;
+	cout << "Jadwal Pengembalian [yyyy-mm-dd]  : ";
+	cin >> peminjaman.jadwalPengembalian;
 
 	Peminjaman peminjamanWithBuku = insertBukuPinjamanForm(peminjaman);
 	return peminjamanWithBuku;
@@ -170,29 +237,13 @@ void detailPeminjaman()
 {
 	string kodePeminjaman = detailPeminjamanForm();
 	findPeminjamanFromVector(kodePeminjaman);
-
-	cout << endl << endl;
-	cout << "Kembali ke menu peminjaman & pengembalian [y/n]: ";
-	char menuSelection;
-	cin >> menuSelection;
-
-	switch (menuSelection)
-	{
-	case 'y':
-		daftarPeminjaman();
-		break;
-	case 'n':
-		break;
-	default:
-		cout << "Input invalid";
-		break;
-	}
+	detailPeminjamanMenuSwitch();
 }
 
 string detailPeminjamanForm()
 {
 	system("cls");
-	cout << "------------- DETAIL PEMINJAMAN -------------" << endl;
+	cout << "-- DETAIL PEMINJAMAN -----------------" << endl;
 
 	cout << "Kode Peminjaman      : ";
 	string kode;
@@ -209,25 +260,107 @@ void findPeminjamanFromVector(string kodePeminjaman)
 
 	if (peminjaman != peminjamanVector.end())
 	{
-		cout << "Kode Anggota         : " << peminjaman->kodeAnggota << endl;
+		cout << "Nama Anggota         : " << findAnggotaByKode(peminjaman->kodeAnggota) << endl;
 		cout << "Tanggal Peminjaman   : " << peminjaman->tanggalPeminjaman << endl;
-		cout << "Tanggal Pengembalian : " << peminjaman->tanggalPengembalian << endl;
+		cout << "Jadwal Pengembalian  : " << peminjaman->jadwalPengembalian << endl;
+		cout << "Tanggal Kembali      : " << peminjaman->tanggalDikembalikan << endl;
 		cout << "Status               : " << peminjaman->status << endl;
 
-		cout << endl;
-		cout << "---- DETAIL BUKU PINJAMAN ----" << endl;
-		for (auto bukuPinjaman : peminjaman->bukuPinjamanVector)
-		{
-			cout << endl;
-			cout << "Kode Buku : " << bukuPinjaman.kode << endl;
-			cout << "Jumlah    : " << bukuPinjaman.jumlah << " buah" << endl;
-		}
-
+		formatDetailPeminjamanTable(peminjaman->bukuPinjamanVector);
 	}
 	else
 	{
 		cout << "Tidak dapat memuat detail peminjaman!" << endl;
 		cout << "Peminjaman dengan kode tersebut tidak ditemukan!" << endl;
+	}
+}
+
+string findAnggotaByKode(string kode)
+{
+	auto anggota = find_if(anggotaVector.begin(), anggotaVector.end(), [kode](const Anggota& anggota) {
+		return anggota.kode == kode;
+		});
+
+	if (anggota != anggotaVector.end())
+	{
+		return anggota->nama;
+	}
+}
+
+void formatDetailPeminjamanTable(vector<BukuPinjaman>& bukuPinjamanVector)
+{
+	cout << endl;
+	formatDetailPeminjamanTableHeader();
+	formatDetailPeminjamanTableChildRow(bukuPinjamanVector);
+}
+
+void formatDetailPeminjamanTableHeader()
+{
+	cout << "+";
+	cout << left << setw(109) << setfill(tableFormatter.headerRowSeparator) << "- DAFTAR BUKU PINJAMAN -";
+	cout << "+";
+	cout << endl;
+
+	cout << "|  ";
+	cout << left << setw(tableFormatter.counterColumnLength) << setfill(tableFormatter.columnSeparator) << "#";
+	cout << left << setw(tableFormatter.numColumnLength) << setfill(tableFormatter.columnSeparator) << "Kode";
+	cout << left << setw(tableFormatter.stringColumnLength) << setfill(tableFormatter.columnSeparator) << "Judul";
+	cout << left << setw(tableFormatter.nameColumnLength) << setfill(tableFormatter.columnSeparator) << "Penulis";
+	cout << left << setw(tableFormatter.numColumnLength) << setfill(tableFormatter.columnSeparator) << "Terbit";
+	cout << left << setw(tableFormatter.numColumnLength) << setfill(tableFormatter.columnSeparator) << "Jumlah";
+	cout << "  |" << endl;
+
+	cout << "+";
+	cout << left << setw(109) << setfill(tableFormatter.headerRowSeparator) << "";
+	cout << "+";
+	cout << endl;
+}
+
+void formatDetailPeminjamanTableChildRow(vector<BukuPinjaman>& bukuPinjamanVector)
+{
+	int counter = 1;
+	for (auto bukuPinjaman : bukuPinjamanVector)
+	{
+		auto buku = find_if(bukuVector.begin(), bukuVector.end(), [kode = bukuPinjaman.kode](const Buku& buku) {
+			return buku.kode == kode;
+		});
+
+		if (buku != bukuVector.end())
+		{
+			cout << "|  ";
+			cout << left << setw(tableFormatter.counterColumnLength) << setfill(tableFormatter.columnSeparator) << counter++;
+			cout << left << setw(tableFormatter.numColumnLength) << setfill(tableFormatter.columnSeparator) << buku->kode;
+			cout << left << setw(tableFormatter.stringColumnLength) << setfill(tableFormatter.columnSeparator) << buku->judul;
+			cout << left << setw(tableFormatter.nameColumnLength) << setfill(tableFormatter.columnSeparator) << buku->penulis;
+			cout << left << setw(tableFormatter.numColumnLength) << setfill(tableFormatter.columnSeparator) << buku->tahunTerbit;
+			cout << left << setw(tableFormatter.numColumnLength) << setfill(tableFormatter.columnSeparator) << bukuPinjaman.jumlah;
+			cout << "  |" << endl;
+		}
+	}
+
+	cout << "+";
+	cout << left << setw(109) << setfill(tableFormatter.headerRowSeparator) << "";
+	cout << "+";
+	cout << endl;
+}
+
+void detailPeminjamanMenuSwitch()
+{
+	cout << endl;
+	cout << "Kembali ke menu peminjaman & pengembalian [y/n]: ";
+	char menuSelection;
+	cin >> menuSelection;
+
+	switch (menuSelection)
+	{
+	case 'y':
+		daftarPeminjaman();
+		break;
+	case 'n':
+		break;
+	default:
+		cout << "Input invalid";
+		break;
 	}
 }
 
@@ -277,7 +410,8 @@ bool returnPeminjamanFromVector(Pengembalian pengembalian)
 		peminjaman->status = "Sudah dikembalikan";
 		returnBukuPinjaman(peminjaman->bukuPinjamanVector);
 
-		int daysBetween = getDaysBetweenDates(peminjaman->tanggalPengembalian, pengembalian.tanggalPengembalian);
+		peminjaman->tanggalDikembalikan = pengembalian.tanggalPengembalian;
+		int daysBetween = getDaysBetweenDates(peminjaman->jadwalPengembalian, pengembalian.tanggalPengembalian);
 		if (daysBetween > 0)
 		{
 			payDenda(peminjaman->bukuPinjamanVector, daysBetween);
@@ -360,4 +494,3 @@ int getDaysBetweenDates(string firstDate, string secondDate)
 	// by 86400 to get the number of days 
 	return (end - start) / 86400;
 }
-

@@ -5,6 +5,8 @@
 
 using namespace std;
 
+void biodataTimMenuSwitch();
+
 void biodataTim()
 {
 	system("cls");
@@ -18,6 +20,11 @@ void biodataTim()
 	cout << "| 5. | Muhammad Abiyyu        (20.11.3346)  |\n";
 	cout << "+----+--------------------------------------+\n";
 
+	biodataTimMenuSwitch();
+}
+
+void biodataTimMenuSwitch()
+{
 	cout << endl;
 	cout << "Kembali ke halaman utama [y/n]: ";
 	char menuSelection;

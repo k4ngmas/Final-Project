@@ -7,6 +7,7 @@ using namespace std;
 
 struct Buku buku;
 struct Anggota anggota;
+struct TableFormatter tableFormatter;
 
 vector<Buku> bukuVector;
 vector<Anggota> anggotaVector;
@@ -15,12 +16,14 @@ vector<Peminjaman> peminjamanVector;
 void defineBuku();
 void defineAnggota();
 
-void defineAll() {
+void defineAll() 
+{
 	defineBuku();
 	defineAnggota();
 }
 
-void defineBuku() {
+void defineBuku() 
+{
 	if (bukuVector.empty())
 	{
 		bukuVector.push_back({ "PRG001", "Clean Code", "Robert Cecil Martin", 2008, 15 });
@@ -28,9 +31,10 @@ void defineBuku() {
 	}
 }
 
-void defineAnggota() {
+void defineAnggota() 
+{
 	if (anggotaVector.empty())
 	{
-		anggotaVector.push_back({ "ANG001", "Rafael Shah Johan", 18, "Jakarta Pusat" });
+		anggotaVector.push_back({ "ANG001", "Rafael Shah Johan", 18, "Kota Adm. Jakarta Pusat, DKI Jakarta" });
 	}
 }

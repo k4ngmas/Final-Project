@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <Windows.h>
+#include <iomanip>
 
 #include "Menu.h"
 #include "DaftarAnggota.h"
@@ -10,8 +11,14 @@ using namespace std;
 
 extern struct Anggota anggota;
 extern vector<Anggota> anggotaVector;
+extern struct TableFormatter tableFormatter;
+
+void formatAnggotaTable();
+void formatAnggotaTableHeader();
+void formatAnggotaTableChildRow();
 
 void anggotaMenu();
+void anggotaMenuSwitch();
 void insertAnggota();
 void updateAnggota();
 void deleteAnggota();
@@ -26,28 +33,70 @@ bool deleteFromAnggotaVector(string kodeAnggota);
 
 void daftarAnggota() {
 	system("cls");
-	cout << "------------- DAFTAR ANGGOTA -------------" << endl;
+	formatAnggotaTable();
+	anggotaMenu();
+}
+
+void formatAnggotaTable()
+{
+	formatAnggotaTableHeader();
+	formatAnggotaTableChildRow();
+}
+
+void formatAnggotaTableHeader()
+{
+	cout << "+";
+	cout << left << setw(89) << setfill(tableFormatter.headerRowSeparator) << "- DAFTAR ANGGOTA -";
+	cout << "+";
 	cout << endl;
 
+	cout << "|  ";
+	cout << left << setw(tableFormatter.counterColumnLength) << setfill(tableFormatter.columnSeparator) << "#";
+	cout << left << setw(tableFormatter.numColumnLength) << setfill(tableFormatter.columnSeparator) << "Kode";
+	cout << left << setw(tableFormatter.nameColumnLength) << setfill(tableFormatter.columnSeparator) << "Nama";
+	cout << left << setw(tableFormatter.stringColumnLength) << setfill(tableFormatter.columnSeparator) << "Alamat";
+	cout << "  |" << endl;
+
+	cout << "+";
+	cout << left << setw(89) << setfill(tableFormatter.headerRowSeparator) << "";
+	cout << "+";
+	cout << endl;
+}
+
+void formatAnggotaTableChildRow()
+{
 	int count = 1;
 	for (auto anggota : anggotaVector)
 	{
-		cout << count++ << ". " << anggota.kode << " - " << anggota.nama
-			<< " (" << anggota.umur << ", " << anggota.alamat << ")" << endl;
+		cout << "|  ";
+		cout << left << setw(tableFormatter.counterColumnLength) << setfill(tableFormatter.columnSeparator) << count++;
+		cout << left << setw(tableFormatter.numColumnLength) << setfill(tableFormatter.columnSeparator) << anggota.kode;
+		cout << left << setw(tableFormatter.nameColumnLength) << setfill(tableFormatter.columnSeparator) << anggota.nama;
+		cout << left << setw(tableFormatter.stringColumnLength) << setfill(tableFormatter.columnSeparator) << anggota.alamat;
+		cout << "  |" << endl;
 	}
 
-	anggotaMenu();
+	cout << "+";
+	cout << left << setw(89) << setfill(tableFormatter.headerRowSeparator) << "";
+	cout << "+";
+	cout << endl;
 }
 
 void anggotaMenu()
 {
 	cout << endl;
-	cout << "--- Menu ---" << endl;
-	cout << "1. Tambah anggota" << endl;
-	cout << "2. Update anggota" << endl;
-	cout << "3. Hapus angggota" << endl;
-	cout << "9. Kembali ke menu utama" << endl << endl;
+	cout << "+- MENU ---------------------+" << endl;
+	cout << "|  1. Tambah anggota         |" << endl;
+	cout << "|  2. Update anggota         |" << endl;
+	cout << "|  3. Hapus anggota          |" << endl;
+	cout << "|  9. Kembali ke menu utama  |" << endl;
+	cout << "+----------------------------+" << endl << endl;
 
+	anggotaMenuSwitch();
+}
+
+void anggotaMenuSwitch()
+{
 	cout << "Pilih menu: ";
 	int menuSelection;
 	cin >> menuSelection;
@@ -111,7 +160,7 @@ Anggota insertAnggotaForm()
 
 bool insertToAnggotaVector(Anggota anggota)
 {
-	anggotaVector.push_back({ anggota.kode, anggota.nama, anggota.umur, anggota.alamat });
+	anggotaVector.push_back(anggota);
 	return true;
 }
 
@@ -160,8 +209,7 @@ Anggota updateAnggotaForm()
 
 bool updateAnggotaVector(Anggota anggota)
 {
-	string kode = anggota.kode;
-	auto updatedAnggota = find_if(anggotaVector.begin(), anggotaVector.end(), [kode](const Anggota& anggota) { 
+	auto updatedAnggota = find_if(anggotaVector.begin(), anggotaVector.end(), [kode = anggota.kode](const Anggota& anggota) { 
 			return anggota.kode == kode; 
 	});
 

@@ -5,6 +5,19 @@
 #include <string>
 #include <vector>
 
+// Global table formatter
+extern struct TableFormatter
+{
+	int counterColumnLength = 5;
+	int stringColumnLength = 40;
+	int nameColumnLength = 30;
+	int numColumnLength = 10;
+	int dateColumnLength = 18;
+	int statusColumnLength = 20;
+	char columnSeparator = ' ';
+	char headerRowSeparator = '-';
+};
+
 // Global variables for Buku
 extern struct Buku
 {
@@ -40,7 +53,8 @@ struct Peminjaman
 	std::string kode;
 	std::string kodeAnggota;
 	std::string tanggalPeminjaman;
-	std::string tanggalPengembalian;
+	std::string jadwalPengembalian;
+	std::string tanggalDikembalikan = "-";
 	std::string status = "Dipinjamkan";
 	std::vector<BukuPinjaman> bukuPinjamanVector;
 	int dendaTelat = 0;
