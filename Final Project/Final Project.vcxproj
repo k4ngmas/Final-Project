@@ -141,6 +141,7 @@
   <ItemGroup>
     <ClCompile Include="DaftarAnggota.cpp" />
     <ClCompile Include="DaftarBuku.cpp" />
+    <ClCompile Include="GenerateFile.cpp" />
     <ClCompile Include="GlobalsDefinitions.cpp" />
     <ClCompile Include="Login.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -151,6 +152,7 @@
   <ItemGroup>
     <ClInclude Include="DaftarAnggota.h" />
     <ClInclude Include="DaftarBuku.h" />
+    <ClInclude Include="GenerateFile.h" />
     <ClInclude Include="GlobalsDefinitions.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="Login.h" />

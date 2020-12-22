@@ -34,6 +34,9 @@
     <Filter Include="Source Files\PeminjamanPengembalian">
       <UniqueIdentifier>{70dfdd69-4a50-4be8-8391-bf6f96fbd500}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\GenerateFile">
+      <UniqueIdentifier>{5f7d30c1-2781-4956-91be-ea0f8559db04}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -60,6 +63,9 @@
     <ClCompile Include="PeminjamanPengembalian.cpp">
       <Filter>Source Files\PeminjamanPengembalian</Filter>
     </ClCompile>
+    <ClCompile Include="GenerateFile.cpp">
+      <Filter>Source Files\GenerateFile</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Login.h">
@@ -85,6 +91,9 @@
     </ClInclude>
     <ClInclude Include="PeminjamanPengembalian.h">
       <Filter>Source Files\PeminjamanPengembalian</Filter>
+    </ClInclude>
+    <ClInclude Include="GenerateFile.h">
+      <Filter>Source Files\GenerateFile</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
