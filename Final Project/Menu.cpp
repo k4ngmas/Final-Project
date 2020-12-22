@@ -4,6 +4,7 @@
 #include "PeminjamanPengembalian.h"
 #include "MemberTeam.h"
 #include "DaftarBuku.h"
+#include "GenerateFile.h"
 #include "DaftarAnggota.h"
 
 using namespace std;
@@ -42,7 +43,7 @@ void mainMenuSwitch()
         daftarAnggota();
         break;
     case 4:
-        cout << "NOT IMPLEMENTED YET!" << endl;
+        generateFile();
         break;
     case 5:
         biodataTim();
