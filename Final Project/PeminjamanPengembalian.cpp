@@ -93,7 +93,7 @@ void formatPeminjamanTableHeader()
 void formatPeminjamanTableChildRow()
 {
 	int count = 1;
-	for (auto peminjaman : peminjamanVector)
+	for (auto &peminjaman : peminjamanVector)
 	{
 		cout << "|  ";
 		cout << left << setw(tableFormatter.counterColumnLength) << setfill(tableFormatter.columnSeparator) << count++;
@@ -319,7 +319,7 @@ void formatDetailPeminjamanTableHeader()
 void formatDetailPeminjamanTableChildRow(vector<BukuPinjaman>& bukuPinjamanVector)
 {
 	int counter = 1;
-	for (auto bukuPinjaman : bukuPinjamanVector)
+	for (auto &bukuPinjaman : bukuPinjamanVector)
 	{
 		auto buku = find_if(bukuVector.begin(), bukuVector.end(), [kode = bukuPinjaman.kode](const Buku& buku) {
 			return buku.kode == kode;
@@ -428,7 +428,7 @@ bool returnPeminjamanFromVector(Pengembalian pengembalian)
 
 void returnBukuPinjaman(vector<BukuPinjaman> &bukuPinjamanVector)
 {
-	for (auto bukuPinjaman : bukuPinjamanVector)
+	for (auto &bukuPinjaman : bukuPinjamanVector)
 	{
 		auto buku = find_if(bukuVector.begin(), bukuVector.end(), [kode = bukuPinjaman.kode](const Buku& buku) {
 			return buku.kode == kode;
@@ -466,7 +466,7 @@ void payDenda(vector<BukuPinjaman> &bukuPinjamanVector, int daysBetween)
 int countDenda(vector<BukuPinjaman> &bukuPinjamanVector, int daysBetween)
 {
 	int totalBuku = 0;
-	for (auto bukuPinjaman : bukuPinjamanVector)
+	for (auto &bukuPinjaman : bukuPinjamanVector)
 	{
 		totalBuku += bukuPinjaman.jumlah;
 	}

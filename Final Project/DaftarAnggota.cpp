@@ -66,7 +66,7 @@ void formatAnggotaTableHeader()
 void formatAnggotaTableChildRow()
 {
 	int count = 1;
-	for (auto anggota : anggotaVector)
+	for (auto &anggota : anggotaVector)
 	{
 		cout << "|  ";
 		cout << left << setw(tableFormatter.counterColumnLength) << setfill(tableFormatter.columnSeparator) << count++;
@@ -128,7 +128,7 @@ void insertAnggota()
 
 	if (isInsertionSuccessful)
 	{
-		cout << "Buku berhasil ditambahkan!" << endl;
+		cout << "Anggota berhasil ditambahkan!" << endl;
 	}
 	
 	Sleep(500);
@@ -233,12 +233,12 @@ void deleteAnggota()
 	cout << endl;
 	if (isDeletionSuccessful)
 	{
-		cout << "Buku berhasil dihapus!" << endl;
+		cout << "Anggota berhasil dihapus!" << endl;
 	}
 	else
 	{
-		cout << "Buku gagal dihapus!" << endl;
-		cout << "Buku dengan kode tersebut tidak ditemukan!" << endl;
+		cout << "Anggota gagal dihapus!" << endl;
+		cout << "Anggota dengan kode tersebut tidak ditemukan!" << endl;
 	}
 
 	Sleep(500);

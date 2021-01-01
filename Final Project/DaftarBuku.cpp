@@ -69,7 +69,7 @@ void formatBukuTableHeader()
 void formatBukuTableChildRow()
 {
 	int count = 1;
-	for (auto buku : bukuVector)
+	for (auto &buku : bukuVector)
 	{
 		cout << "|  ";
 		cout << left << setw(tableFormatter.counterColumnLength) << setfill(tableFormatter.columnSeparator) << count++;

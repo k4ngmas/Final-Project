@@ -24,8 +24,8 @@ extern struct Buku
 	std::string kode;
 	std::string judul;
 	std::string penulis;
-	int tahunTerbit;
-	int stok;
+	int tahunTerbit = 0;
+	int stok = 0;
 };
 
 extern std::vector<Buku> bukuVector;
@@ -35,7 +35,7 @@ extern struct Anggota
 {
 	std::string kode;
 	std::string nama;
-	int umur;
+	int umur = 0;
 	std::string alamat;
 };
 
