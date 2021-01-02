@@ -130,8 +130,13 @@ void insertAnggota()
 	{
 		cout << "Anggota berhasil ditambahkan!" << endl;
 	}
+	else
+	{
+		cout << "Anggota gagal ditambahkan!" << endl;
+		cout << "Anggota dengan kode tersebut sudah ada!" << endl;
+	}
 	
-	Sleep(500);
+	Sleep(1000);
 	daftarAnggota();
 }
 
@@ -160,6 +165,15 @@ Anggota insertAnggotaForm()
 
 bool insertToAnggotaVector(Anggota anggota)
 {
+	auto findAnggota = find_if(anggotaVector.begin(), anggotaVector.end(), [kode = anggota.kode](const Anggota& anggota) {
+		return anggota.kode == kode;
+	});
+
+	if (findAnggota != anggotaVector.end())
+	{
+		return false;
+	}
+
 	anggotaVector.push_back(anggota);
 	return true;
 }
@@ -180,7 +194,7 @@ void updateAnggota()
 		cout << "Anggota dengan kode tersebut tidak ditemukan!" << endl;
 	}
 
-	Sleep(500);
+	Sleep(1000);
 	daftarAnggota();
 }
 
@@ -241,7 +255,7 @@ void deleteAnggota()
 		cout << "Anggota dengan kode tersebut tidak ditemukan!" << endl;
 	}
 
-	Sleep(500);
+	Sleep(1000);
 	daftarAnggota();
 }
 

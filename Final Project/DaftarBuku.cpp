@@ -136,8 +136,13 @@ void insertBuku()
 	{
 		cout << "Buku berhasil ditambahkan!" << endl;
 	}
+	else
+	{
+		cout << "Buku gagal ditambahkan!" << endl;
+		cout << "Buku dengan kode tersebut sudah ada!" << endl;
+	}
 
-	Sleep(500);
+	Sleep(1000);
 	daftarBuku();
 }
 
@@ -167,6 +172,15 @@ Buku insertBukuForm()
 
 bool insertToBukuVector(Buku buku)
 {
+	auto findBuku = find_if(bukuVector.begin(), bukuVector.end(), [kode = buku.kode](const Buku& buku) {
+		return buku.kode == kode;
+	});
+
+	if (findBuku != bukuVector.end())
+	{
+		return false;
+	}
+
 	bukuVector.push_back(buku);
 	return true;
 }
@@ -187,7 +201,7 @@ void updateBuku()
 		cout << "Buku dengan kode tersebut tidak ditemukan!" << endl;
 	}
 
-	Sleep(500);
+	Sleep(1000);
 	daftarBuku();
 }
 
@@ -250,7 +264,7 @@ void deleteBuku()
 		cout << "Buku dengan kode tersebut tidak ditemukan!" << endl;
 	}
 
-	Sleep(500);
+	Sleep(1000);
 	daftarBuku();
 }
 

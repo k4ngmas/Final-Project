@@ -166,7 +166,7 @@ void insertPeminjaman()
 		cout << "Peminjaman berhasil ditambahkan!" << endl;
 	}
 
-	Sleep(500);
+	Sleep(1000);
 	daftarPeminjaman();
 }
 
@@ -380,7 +380,7 @@ void returnPeminjaman()
 		cout << "Peminjaman dengan kode tersebut tidak ditemukan!" << endl;
 	}
 
-	Sleep(500);
+	Sleep(1000);
 	daftarPeminjaman();
 }
 

@@ -12,7 +12,7 @@ int main() {
 
 	while (!authenticationStatus)
 	{
-		Sleep(300);
+		Sleep(700);
 		authenticationStatus = loginMenu();
 	}
 
