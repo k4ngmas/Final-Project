@@ -1,6 +1,7 @@
-#include <iostream>
-#include <string>
+#include <iostream> // agar bisa menggunakan cout dan cin
+#include <string> // agar bisa menggunakan tipe data string 
 
+// include header file setiap fitur
 #include "PeminjamanPengembalian.h"
 #include "MemberTeam.h"
 #include "DaftarBuku.h"
@@ -9,8 +10,12 @@
 
 using namespace std;
 
+// functions harus tetap di tuliskan diatas pertama kali
+// kemudian function tersebut baru diberi detail di bawah
+// ini merupakan aturan dari C++
 void mainMenuSwitch();
 
+// main function untuk main menu
 void mainMenu() 
 {
     system("cls");
@@ -25,6 +30,7 @@ void mainMenu()
     mainMenuSwitch();
 }
 
+// switch case untuk pemilihan sub-menu
 void mainMenuSwitch()
 {
     cout << "Pilih Menu : ";

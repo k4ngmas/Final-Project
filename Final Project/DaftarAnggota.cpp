@@ -1,18 +1,26 @@
-#include <iostream>
-#include <string>
-#include <Windows.h>
-#include <iomanip>
+#include <iostream> // untuk cout cin
+#include <string> // agar bisa menggunakan tipe data string 
+#include <Windows.h> // untuk menggunakan function Sleep()
+#include <iomanip> // untuk menggunakan setw(), setfill() dan left
 
-#include "Menu.h"
-#include "DaftarAnggota.h"
-#include "Globals.h"
+#include "Menu.h" // penghubung agar function mainMenu() bisa dipanggil di file ini
+#include "DaftarAnggota.h" // header file penghubung antara Main Menu dan Fitur Anggota
+#include "Globals.h" // agar bisa menggunakan struct dan vector anggota yg tersimpan sebagai global variable
 
 using namespace std;
 
+// struct adalah semacam tipe data yang dapat di custom, biasanya berperan sebagai object
+// vector adalah semacam array yang dinamis yang lebih fleksibel daripada array, 
+// fleksibel dalam artian isi elemen dalam vector bisa bermacam-macam tidak perlu ditentukan dengan const
+// extern menandakan bahwa variable berikut adalah variable yang sudah didefinisikan di file lain
+// dalam kata lain, ini adalah penanda bahwa variable di bawah ini merupakan global variable
 extern struct Anggota anggota;
 extern vector<Anggota> anggotaVector;
 extern struct TableFormatter tableFormatter;
 
+// functions harus tetap di tuliskan diatas pertama kali
+// kemudian function tersebut baru diberi detail di bawah
+// ini merupakan aturan dari C++
 void formatAnggotaTable();
 void formatAnggotaTableHeader();
 void formatAnggotaTableChildRow();
@@ -31,20 +39,27 @@ bool insertToAnggotaVector(Anggota anggota);
 bool updateAnggotaVector(Anggota anggota);
 bool deleteFromAnggotaVector(string kodeAnggota);
 
+// main function untuk keseluruhan fitur anggota
 void daftarAnggota() {
 	system("cls");
 	formatAnggotaTable();
 	anggotaMenu();
 }
 
+// format tabel data anggota secara keseluruhan
 void formatAnggotaTable()
 {
 	formatAnggotaTableHeader();
 	formatAnggotaTableChildRow();
 }
 
+// format untuk header tabel daftar anggota
 void formatAnggotaTableHeader()
 {
+	// left untuk align text ke kiri
+	// setw untuk menentukan jumlah karakter maksimal dalam 1 kali pemanggilan cout
+	// setfill untuk menambahkan karakter sebagai pengganti 
+	// pengganti ini akan mengisi ruang kosong yang tersisa jika string tidak mencapai batas maksimal
 	cout << "+";
 	cout << left << setw(89) << setfill(tableFormatter.headerRowSeparator) << "- DAFTAR ANGGOTA -";
 	cout << "+";
@@ -63,11 +78,20 @@ void formatAnggotaTableHeader()
 	cout << endl;
 }
 
+// format untuk kolom isian daftar anggota
 void formatAnggotaTableChildRow()
 {
 	int count = 1;
+
+	// looping untuk mengakses value bukuVector
+	// menggunakan tanda & didepan variable agar variable itu terisi oleh reference
+	// kenapa menggunakan reference? agar di memori tidak terjadi duplikasi data vector
 	for (auto &anggota : anggotaVector)
 	{
+		// left untuk align text ke kiri
+		// setw untuk menentukan jumlah karakter maksimal dalam 1 kali pemanggilan cout
+		// setfill untuk menambahkan karakter sebagai pengganti 
+		// pengganti ini akan mengisi ruang kosong yang tersisa jika string tidak mencapai batas maksimal
 		cout << "|  ";
 		cout << left << setw(tableFormatter.counterColumnLength) << setfill(tableFormatter.columnSeparator) << count++;
 		cout << left << setw(tableFormatter.numColumnLength) << setfill(tableFormatter.columnSeparator) << anggota.kode;
@@ -82,6 +106,7 @@ void formatAnggotaTableChildRow()
 	cout << endl;
 }
 
+// menampilkan menu fitur anggota
 void anggotaMenu()
 {
 	cout << endl;
@@ -92,9 +117,11 @@ void anggotaMenu()
 	cout << "|  9. Kembali ke menu utama  |" << endl;
 	cout << "+----------------------------+" << endl << endl;
 
+	// memanggil input pemilihan menu
 	anggotaMenuSwitch();
 }
 
+// switch case untuk pemilihan menu daftar buku
 void anggotaMenuSwitch()
 {
 	cout << "Pilih menu: ";
@@ -121,11 +148,15 @@ void anggotaMenuSwitch()
 	}
 }
 
+// main function untuk fitur tambah anggota
 void insertAnggota() 
 {
+	// menampilkan form input menambah anggota dan menyimpan isinya dalam variable anggota
 	Anggota anggota = insertAnggotaForm();
+	// melakukan penambahan buku dan mengembalikan true / false tergantung keberhasilan penambahan
 	bool isInsertionSuccessful = insertToAnggotaVector(anggota);
 
+	// cek jika penambahan berhasil
 	if (isInsertionSuccessful)
 	{
 		cout << "Anggota berhasil ditambahkan!" << endl;
@@ -140,6 +171,8 @@ void insertAnggota()
 	daftarAnggota();
 }
 
+// form insert buku
+// memiliki return type Anggota karena yang di return oleh si function adalah data dengan tipe data struct Anggota
 Anggota insertAnggotaForm()
 {
 	system("cls");
@@ -163,27 +196,37 @@ Anggota insertAnggotaForm()
 	return anggota;
 }
 
+// proses penambahan anggota ke vector anggotaVector
 bool insertToAnggotaVector(Anggota anggota)
 {
+	// cek jika kode buku sudah ada
 	auto findAnggota = find_if(anggotaVector.begin(), anggotaVector.end(), [kode = anggota.kode](const Anggota& anggota) {
 		return anggota.kode == kode;
 	});
 
+	// jika kode buku sudah ada, maka function akan return false
+	// maka tidak akan terjadi penambahan
 	if (findAnggota != anggotaVector.end())
 	{
 		return false;
 	}
 
+	// jika kode buku tidak ada maka proses penambahan dilakukan
 	anggotaVector.push_back(anggota);
+	// return true karena proses penambahan berhasil
 	return true;
 }
 
+// main function untuk fitur update anggota
 void updateAnggota() 
 {
+	// menampilkan form input dan menyimpan datanya dalam variable anggota
 	Anggota anggota = updateAnggotaForm();
+	// melakukan update anggota dan mengembalikan true / false tergantung keberhasilan update
 	bool isUpdateSuccessful = updateAnggotaVector(anggota);
 
 	cout << endl;
+	// cek jika proses update berhasil atau tidak
 	if (isUpdateSuccessful)
 	{
 		cout << "Anggota berhasil diupdate!" << endl;
@@ -198,6 +241,7 @@ void updateAnggota()
 	daftarAnggota();
 }
 
+// form update anggota
 Anggota updateAnggotaForm()
 {
 	system("cls");
@@ -221,12 +265,16 @@ Anggota updateAnggotaForm()
 	return anggota;
 }
 
+// proses update anggota
 bool updateAnggotaVector(Anggota anggota)
 {
+	// cek jika anggota dengan kode tertentu dapat ditemukan
 	auto updatedAnggota = find_if(anggotaVector.begin(), anggotaVector.end(), [kode = anggota.kode](const Anggota& anggota) { 
-			return anggota.kode == kode; 
+		return anggota.kode == kode; 
 	});
 
+	// jika ditemukan maka anggota akan di update
+	// return true karena proses update berhasil
 	if (updatedAnggota != anggotaVector.end())
 	{
 		updatedAnggota->nama = anggota.nama;
@@ -236,15 +284,21 @@ bool updateAnggotaVector(Anggota anggota)
 		return true;
 	}
 
+	// jika tidak maka proses update tidak akan dilakukan
+	// return false karena proses update tidak berhasil
 	return false;
 }
 
+// main function untuk fitur hapus anggota
 void deleteAnggota() 
 {
+	// menampilkan form input dan menyimpan data nya dalam variable kodeAnggota
 	string kodeAnggota = deleteAnggotaForm();
+	// melakukan proses hapus anggota
 	bool isDeletionSuccessful = deleteFromAnggotaVector(kodeAnggota);
 
 	cout << endl;
+	// cek jika anggota berhasil dihapus atau tidak
 	if (isDeletionSuccessful)
 	{
 		cout << "Anggota berhasil dihapus!" << endl;
@@ -259,6 +313,7 @@ void deleteAnggota()
 	daftarAnggota();
 }
 
+// form hapus anggota
 string deleteAnggotaForm()
 {
 	system("cls");
@@ -272,17 +327,23 @@ string deleteAnggotaForm()
 	return kode;
 }
 
+// proses penghapusan anggota dari vector
 bool deleteFromAnggotaVector(string kodeAnggota)
 {
+	// mencari apakah anggota dengan kode tertentu dapat ditemukan dalam vector
 	auto erasedAnggota = remove_if(anggotaVector.begin(), anggotaVector.end(), [kodeAnggota](const Anggota& anggota) {
 		return anggota.kode == kodeAnggota;
 	});
 
+	// jika buku ditemukan maka buku itu akan dihapus dari vector
+	// return true karena proses penghapusan berhasil
 	if (erasedAnggota != anggotaVector.end())
 	{
 		anggotaVector.erase(erasedAnggota, anggotaVector.end());
 		return true;
 	}
 
+	// jika buku tidak ditemukan maka buku tidak terhapus
+	// return false karena buku tidak terhapus
 	return false;
 }

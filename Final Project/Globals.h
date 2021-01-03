@@ -2,8 +2,8 @@
 #ifndef MY_GLOBALS_H
 #define MY_GLOBALS_H
 
-#include <string>
-#include <vector>
+#include <string> // include agar dapat menggunakan tipe data string
+#include <vector> // include agar dapat menggunakan tipe data vector
 
 // Global table formatter
 extern struct TableFormatter

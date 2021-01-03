@@ -1,12 +1,16 @@
-#include <iostream>
+#include <iostream> // agar dapat menggunakan cout dan cin
 
-#include "Menu.h"
-#include "MemberTeam.h"
+#include "Menu.h" // penghubung agar function mainMenu() bisa dipanggil di file ini
+#include "MemberTeam.h" // header file penghubung antara Main Menu dan Fitur MemberTeam
 
 using namespace std;
 
+// functions harus tetap di tuliskan diatas pertama kali
+// kemudian function tersebut baru diberi detail di bawah
+// ini merupakan aturan dari C++
 void biodataTimMenuSwitch();
 
+// main function untuk fitur Member Team
 void biodataTim()
 {
 	system("cls");
@@ -23,6 +27,7 @@ void biodataTim()
 	biodataTimMenuSwitch();
 }
 
+// switch case untuk kembali ke halaman main menu
 void biodataTimMenuSwitch()
 {
 	cout << endl;
