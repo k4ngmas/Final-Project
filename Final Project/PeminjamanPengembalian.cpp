@@ -374,7 +374,8 @@ void findPeminjamanFromVector(string kodePeminjaman)
 		cout << "Jadwal Pengembalian  : " << peminjaman->jadwalPengembalian << endl;
 		cout << "Tanggal Kembali      : " << peminjaman->tanggalDikembalikan << endl;
 		cout << "Status               : " << peminjaman->status << endl;
-
+		cout << "Denda                : " << peminjaman->dendaTelat << endl;
+			 
 		formatDetailPeminjamanTable(peminjaman->bukuPinjamanVector);
 	}
 	// jika tidak maka akan keluar sebuah warning

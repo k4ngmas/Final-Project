@@ -1,0 +1,12 @@
+Nama Anggota         : Rafael Shah Johan
+Tanggal Peminjaman   : 2020-01-10
+Jadwal Pengembalian  : 2020-01-17
+Tanggal Kembali      : -
+Status               : Dipinjamkan
+
++- DAFTAR BUKU PINJAMAN --------------------------------------------------------------------------------------+
+|  #    Kode      Judul                                   Penulis                       Terbit    Jumlah      |
++-------------------------------------------------------------------------------------------------------------+
+|  1    PRG001    Clean Code                              Robert Cecil Martin           2008      2           |
+|  2    PRG002    The Art Of Computer Programming         Donald E. Knuth               1968      2           |
++-------------------------------------------------------------------------------------------------------------+

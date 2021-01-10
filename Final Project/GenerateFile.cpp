@@ -16,104 +16,163 @@ using namespace std;
 // dalam kata lain, ini adalah penanda bahwa variable di bawah ini merupakan global variable
 extern vector<Peminjaman> peminjamanVector;
 extern struct TableFormatter tableFormatter;
+extern vector<Anggota> anggotaVector;
+extern vector<Buku> bukuVector;
 
-void formatFileTableHeader(ofstream &peminjamanFile);
-void formatFileTableChildRow(ofstream &peminjamanFile);
+string generateFileForm();
+bool findPeminjamanFromVector(string kodePeminjaman, ofstream& peminjamanFile);
+string findAnggotaFromKode(string kodeAnggota);
+void formatDetailPeminjamanTable(vector<BukuPinjaman>& bukuPinjamanVector, ofstream& peminjamanFile);
+void formatDetailPeminjamanTableHeader(ofstream& peminjamanFile);
+void formatDetailPeminjamanTableChildRow(vector<BukuPinjaman>& bukuPinjamanVector, ofstream& peminjamanFile);
 void generateFileMenuSwitch();
 
 // main function untuk fitur generate file
 void generateFile(){
 	system("cls");
-	cout << "GENERATE FILE DATA PEMINJAMAN-PENGEMBALIAN" << endl << endl;
+	cout << "GENERATE FILE DETAIL PEMINJAMAN" << endl << endl;
 
-	string fileName = "data-peminjaman.txt";
+	string kodePeminjaman = generateFileForm();
 
-	// deklarasi output stream untuk file
 	ofstream peminjamanFile;
-	// open output stream agar kita bisa bekerja dengan file tersebut
-	peminjamanFile.open(fileName);
+	peminjamanFile.open("DATA-PEMINJAMAN-" + kodePeminjaman + ".txt");
 
-	// cek jika proses open berhasil
 	if (peminjamanFile.is_open())
 	{
-		cout << "Generating file..." << endl;
-		formatFileTableHeader(peminjamanFile);
-		formatFileTableChildRow(peminjamanFile);
-
-		peminjamanFile.close();
-		cout << "File generated at " << fileName << "!" << endl;
+		bool isFileGeneratedSuccessfully = findPeminjamanFromVector(kodePeminjaman, peminjamanFile);
+		if (isFileGeneratedSuccessfully)
+		{
+			cout << endl;
+			cout << "Berhasil Generate File!" << endl;
+			cout << "Silahkan cek folder anda!" << endl;
+		}
+		else
+		{
+			cout << endl;
+			cout << "Gagal generate file!" << endl;
+			cout << "Peminjaman dengan kode tersebut tidak ditemukan!" << endl;
+		}
+	}
+	else
+	{
+		cout << endl;
+		cout << "Terjadi eror saat generate file!" << endl;
 	}
 
 	generateFileMenuSwitch();
+}
+
+string generateFileForm()
+{
+	cout << "Kode peminjaman : ";
+	string kodePeminjaman;
+	cin >> kodePeminjaman;
+
+	return kodePeminjaman;
 }
 
 // format header tabel data peminjaman  
 // peminjamanFile ditambahi tanda & didepannya
 // karena jika tidak ditambahi tanda & maka parameter tidak akan diterima
 // dan akan menyebabkan eror
-void formatFileTableHeader(ofstream &peminjamanFile)
+bool findPeminjamanFromVector(string kodePeminjaman, ofstream &peminjamanFile)
 {
-	// left untuk align text ke kiri
-	// setw untuk menentukan jumlah karakter maksimal dalam 1 kali pemanggilan cout
-	// setfill untuk menambahkan karakter sebagai pengganti 
-	// pengganti ini akan mengisi ruang kosong yang tersisa jika string tidak mencapai batas maksimal
+	// cek jika peminjaman dengan kode yang telah di input ada atau tidak
+	auto peminjaman = find_if(peminjamanVector.begin(), peminjamanVector.end(), [kodePeminjaman](const Peminjaman& peminjaman) {
+		return peminjaman.kode == kodePeminjaman;
+	});
+
+	// jika peminjaman dengan kode tersebut ditemukan maka tampilan detail akan muncul
+	if (peminjaman != peminjamanVector.end())
+	{
+		peminjamanFile << "Nama Anggota         : " << findAnggotaFromKode(peminjaman->kodeAnggota) << endl;
+		peminjamanFile << "Tanggal Peminjaman   : " << peminjaman->tanggalPeminjaman << endl;
+		peminjamanFile << "Jadwal Pengembalian  : " << peminjaman->jadwalPengembalian << endl;
+		peminjamanFile << "Tanggal Kembali      : " << peminjaman->tanggalDikembalikan << endl;
+		peminjamanFile << "Status               : " << peminjaman->status << endl;
+		peminjamanFile << "Denda                : " << peminjaman->dendaTelat << endl;
+
+		formatDetailPeminjamanTable(peminjaman->bukuPinjamanVector, peminjamanFile);
+
+		return true;
+	}
+
+	return false;
+}
+
+// function untuk mencari anggota dari kode anggota
+string findAnggotaFromKode(string kodeAnggota)
+{
+	// cek jika anggota dengan kode anggota yang didapat dari detail ada atau tidak
+	auto anggota = find_if(anggotaVector.begin(), anggotaVector.end(), [kodeAnggota](const Anggota& anggota) {
+		return anggota.kode == kodeAnggota;
+	});
+
+	// jika ada maka function akan me return nama anggota
+	if (anggota != anggotaVector.end())
+	{
+		return anggota->nama;
+	}
+}
+
+// format tampilan tabel buku pada detail peminjaman secara keseluruhan
+void formatDetailPeminjamanTable(vector<BukuPinjaman> &bukuPinjamanVector, ofstream &peminjamanFile)
+{
+	peminjamanFile << endl;
+	formatDetailPeminjamanTableHeader(peminjamanFile);
+	formatDetailPeminjamanTableChildRow(bukuPinjamanVector, peminjamanFile);
+}
+
+// format header tabel buku pada detail peminjaman
+void formatDetailPeminjamanTableHeader(ofstream &peminjamanFile)
+{
 	peminjamanFile << "+";
-	peminjamanFile << left << setw(113) << setfill(tableFormatter.headerRowSeparator) << "- DAFTAR PEMINJAMAN -";
+	peminjamanFile << left << setw(109) << setfill(tableFormatter.headerRowSeparator) << "- DAFTAR BUKU PINJAMAN -";
 	peminjamanFile << "+";
 	peminjamanFile << endl;
 
 	peminjamanFile << "|  ";
 	peminjamanFile << left << setw(tableFormatter.counterColumnLength) << setfill(tableFormatter.columnSeparator) << "#";
 	peminjamanFile << left << setw(tableFormatter.numColumnLength) << setfill(tableFormatter.columnSeparator) << "Kode";
-	peminjamanFile << left << setw(tableFormatter.numColumnLength) << setfill(tableFormatter.columnSeparator) << "Anggota";
-	peminjamanFile << left << setw(tableFormatter.dateColumnLength) << setfill(tableFormatter.columnSeparator) << "Tanggal pinjam";
-	peminjamanFile << left << setw(tableFormatter.dateColumnLength) << setfill(tableFormatter.columnSeparator) << "Jadwal kembali";
-	peminjamanFile << left << setw(tableFormatter.dateColumnLength) << setfill(tableFormatter.columnSeparator) << "Tanggal kembali";
-	peminjamanFile << left << setw(tableFormatter.statusColumnLength) << setfill(tableFormatter.columnSeparator) << "Status";
-	peminjamanFile << left << setw(tableFormatter.numColumnLength) << setfill(tableFormatter.columnSeparator) << "Denda";
+	peminjamanFile << left << setw(tableFormatter.stringColumnLength) << setfill(tableFormatter.columnSeparator) << "Judul";
+	peminjamanFile << left << setw(tableFormatter.nameColumnLength) << setfill(tableFormatter.columnSeparator) << "Penulis";
+	peminjamanFile << left << setw(tableFormatter.numColumnLength) << setfill(tableFormatter.columnSeparator) << "Terbit";
+	peminjamanFile << left << setw(tableFormatter.numColumnLength) << setfill(tableFormatter.columnSeparator) << "Jumlah";
 	peminjamanFile << "  |" << endl;
 
 	peminjamanFile << "+";
-	peminjamanFile << left << setw(113) << setfill(tableFormatter.headerRowSeparator) << "";
+	peminjamanFile << left << setw(109) << setfill(tableFormatter.headerRowSeparator) << "";
 	peminjamanFile << "+";
 	peminjamanFile << endl;
 }
 
-// format untuk kolom isian daftar anggota
-void formatFileTableChildRow(ofstream &peminjamanFile)
+// format kolom isian tabel buku pada detail peminjaman
+void formatDetailPeminjamanTableChildRow(vector<BukuPinjaman> &bukuPinjamanVector, ofstream &peminjamanFile)
 {
-	int count = 1;
-
-	// looping untuk mengakses value bukuVector
-	// menggunakan tanda & didepan variable agar variable itu terisi oleh reference
-	// kenapa menggunakan reference? agar di memori tidak terjadi duplikasi data vector
-	for (auto &peminjaman : peminjamanVector)
+	int counter = 1;
+	for (auto& bukuPinjaman : bukuPinjamanVector)
 	{
-		// left untuk align text ke kiri
-		// setw untuk menentukan jumlah karakter maksimal dalam 1 kali pemanggilan cout
-		// setfill untuk menambahkan karakter sebagai pengganti 
-		// pengganti ini akan mengisi ruang kosong yang tersisa jika string tidak mencapai batas maksimal
-		peminjamanFile << "|  ";
-		peminjamanFile << left << setw(tableFormatter.counterColumnLength) << setfill(tableFormatter.columnSeparator) << count++;
-		peminjamanFile << left << setw(tableFormatter.numColumnLength) << setfill(tableFormatter.columnSeparator) << peminjaman.kode;
-		peminjamanFile << left << setw(tableFormatter.numColumnLength) << setfill(tableFormatter.columnSeparator) << peminjaman.kodeAnggota;
-		peminjamanFile << left << setw(tableFormatter.dateColumnLength) << setfill(tableFormatter.columnSeparator) << peminjaman.tanggalPeminjaman;
-		peminjamanFile << left << setw(tableFormatter.dateColumnLength) << setfill(tableFormatter.columnSeparator) << peminjaman.jadwalPengembalian;
-		peminjamanFile << left << setw(tableFormatter.dateColumnLength) << setfill(tableFormatter.columnSeparator) << peminjaman.tanggalDikembalikan;
-		peminjamanFile << left << setw(tableFormatter.statusColumnLength) << setfill(tableFormatter.columnSeparator) << peminjaman.status;
-		peminjamanFile << left << setw(tableFormatter.numColumnLength) << setfill(tableFormatter.columnSeparator) << peminjaman.dendaTelat;
-		peminjamanFile << "  |" << endl;
+		auto buku = find_if(bukuVector.begin(), bukuVector.end(), [kode = bukuPinjaman.kode](const Buku& buku) {
+			return buku.kode == kode;
+		});
+
+		if (buku != bukuVector.end())
+		{
+			peminjamanFile << "|  ";
+			peminjamanFile << left << setw(tableFormatter.counterColumnLength) << setfill(tableFormatter.columnSeparator) << counter++;
+			peminjamanFile << left << setw(tableFormatter.numColumnLength) << setfill(tableFormatter.columnSeparator) << buku->kode;
+			peminjamanFile << left << setw(tableFormatter.stringColumnLength) << setfill(tableFormatter.columnSeparator) << buku->judul;
+			peminjamanFile << left << setw(tableFormatter.nameColumnLength) << setfill(tableFormatter.columnSeparator) << buku->penulis;
+			peminjamanFile << left << setw(tableFormatter.numColumnLength) << setfill(tableFormatter.columnSeparator) << buku->tahunTerbit;
+			peminjamanFile << left << setw(tableFormatter.numColumnLength) << setfill(tableFormatter.columnSeparator) << bukuPinjaman.jumlah;
+			peminjamanFile << "  |" << endl;
+		}
 	}
 
-	// jika vector kosong maka pembatas bawah tidak akan dimunculkan
-	// biar rapi
-	if (!peminjamanVector.empty())
-	{
-		peminjamanFile << "+";
-		peminjamanFile << left << setw(113) << setfill(tableFormatter.headerRowSeparator) << "";
-		peminjamanFile << "+";
-		peminjamanFile << endl;
-	}
+	peminjamanFile << "+";
+	peminjamanFile << left << setw(109) << setfill(tableFormatter.headerRowSeparator) << "";
+	peminjamanFile << "+";
+	peminjamanFile << endl;
 }
 
 // switch case untuk menu kembali ke main menu
